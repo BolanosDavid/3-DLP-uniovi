@@ -3,15 +3,15 @@ package ast.expressions;
 import java.util.List;
 
 public class FunctionInvocation extends Expression {
-    private String name;
+    private Expression function;
     private List<Expression> arguments;
 
-    public String getName() {
-        return name;
+    public Expression getFunction() {
+        return function;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFunction(Expression function) {
+        this.function = function;
     }
 
     public List<Expression> getArguments() {

@@ -1,8 +1,8 @@
 package ast.types;
 
-import ast.base.AbstractASTNode;
+import ast.base.ASTNode;
 
-public abstract class Type extends AbstractASTNode {
+public abstract class Type implements ASTNode {
     public abstract boolean isEquivalentTo(Type type);
 
     @Override

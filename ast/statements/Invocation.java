@@ -3,16 +3,16 @@ package ast.statements;
 import java.util.List;
 import ast.expressions.Expression;
 
-public class ProcedureCall extends Statement {
-    private String name;
+public class Invocation extends Statement {
+    private Expression function;
     private List<Expression> arguments;
 
-    public String getName() {
-        return name;
+    public Expression getFunction() {
+        return function;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFunction(Expression function) {
+        this.function = function;
     }
 
     public List<Expression> getArguments() {

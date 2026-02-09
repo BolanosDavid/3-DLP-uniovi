@@ -1,6 +1,6 @@
 package ast.base;
 
-public abstract class AbstractASTNode implements ASTNode {
+public abstract class AbstractLocatable implements ASTNode, Locatable {
     protected int line;
     protected int column;
 

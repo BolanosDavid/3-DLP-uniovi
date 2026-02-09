@@ -1,6 +1,6 @@
 package ast.statements;
 
-import ast.base.AbstractASTNode;
+import ast.base.AbstractLocatable;
 
-public abstract class Statement extends AbstractASTNode {
+public abstract class Statement extends AbstractLocatable {
 }
