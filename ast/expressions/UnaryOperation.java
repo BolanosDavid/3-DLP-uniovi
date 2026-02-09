@@ -1,8 +1,8 @@
 package ast.expressions;
 
-public class UnaryOperation extends Expression {
-    private String operator;
-    private Expression operand;
+public abstract class UnaryOperation extends Expression {
+    protected String operator;
+    protected Expression operand;
 
     public String getOperator() {
         return operator;

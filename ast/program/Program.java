@@ -1,10 +1,10 @@
 package ast.program;
 
 import java.util.List;
-import ast.base.AbstractASTNode;
+import ast.base.ASTNode;
 import ast.definitions.Definition;
 
-public class Program extends AbstractASTNode {
+public class Program implements ASTNode {
     private List<Definition> definitions;
 
     public List<Definition> getDefinitions() {

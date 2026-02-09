@@ -1,8 +1,8 @@
 package ast.types;
 
-import ast.base.AbstractASTNode;
+import ast.base.AbstractLocatable;
 
-public class RecordField extends AbstractASTNode {
+public class RecordField extends AbstractLocatable {
     private String name;
     private Type type;
 

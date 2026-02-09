@@ -5,6 +5,10 @@ import java.util.List;
 public class RecordType extends Type {
     private List<RecordField> fields;
 
+    public RecordType(List<RecordField> fields) {
+        this.fields = fields;
+    }
+
     public List<RecordField> getFields() {
         return fields;
     }

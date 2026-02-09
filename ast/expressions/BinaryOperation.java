@@ -1,9 +1,9 @@
 package ast.expressions;
 
-public class BinaryOperation extends Expression {
-    private Expression left;
-    private String operator;
-    private Expression right;
+public abstract class BinaryOperation extends Expression {
+    protected Expression left;
+    protected String operator;
+    protected Expression right;
 
     public Expression getLeft() {
         return left;
