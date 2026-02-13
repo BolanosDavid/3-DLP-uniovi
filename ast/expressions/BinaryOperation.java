@@ -5,6 +5,10 @@ public abstract class BinaryOperation extends Expression {
     protected String operator;
     protected Expression right;
 
+    public BinaryOperation(int line, int column) {
+        super(line, column);
+    }
+
     public Expression getLeft() {
         return left;
     }
