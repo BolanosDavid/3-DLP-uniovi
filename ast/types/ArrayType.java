@@ -9,7 +9,6 @@ public class ArrayType extends Type {
         this.elementType = elementType;
     }
 
-    @Override
     public int getSize() {
         return size;
     }
@@ -32,14 +31,11 @@ public class ArrayType extends Type {
             return false;
         }
         ArrayType other = (ArrayType) type;
-        if (elementType == null) {
-            return other.elementType == null;
-        }
-        return elementType.isEquivalentTo(other.elementType);
+        return this.size == other.size && this.elementType.isEquivalentTo(other.elementType);
     }
 
     @Override
     public String toString() {
-        return "array";
+        return "[" + size + "]" + elementType.toString();
     }
 }

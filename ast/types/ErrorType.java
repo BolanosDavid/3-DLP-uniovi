@@ -15,15 +15,11 @@ public class ErrorType extends Type {
 
     @Override
     public boolean isEquivalentTo(Type type) {
-        return type instanceof ErrorType;
+        return true;
     }
 
     @Override
     public String toString() {
         return "error";
-    }
-
-    public static ErrorType getInstance() {
-        return new ErrorType();
     }
 }

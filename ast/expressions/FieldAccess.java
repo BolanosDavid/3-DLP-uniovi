@@ -4,6 +4,10 @@ public class FieldAccess extends Expression {
     private Expression record;
     private String fieldName;
 
+    public FieldAccess(int line, int column) {
+        super(line, column);
+    }
+
     public Expression getRecord() {
         return record;
     }
