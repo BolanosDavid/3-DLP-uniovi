@@ -1,12 +1,16 @@
 package ast.statements;
 
-import java.util.List;
 import ast.expressions.Expression;
+import java.util.List;
 
 public class IfStatement extends Statement {
     private Expression condition;
     private List<Statement> thenBody;
     private List<Statement> elseBody;
+
+    public IfStatement(int line, int column) {
+        super(line, column);
+    }
 
     public Expression getCondition() {
         return condition;

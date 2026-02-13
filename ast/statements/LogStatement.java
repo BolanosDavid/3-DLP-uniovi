@@ -1,10 +1,14 @@
 package ast.statements;
 
-import java.util.List;
 import ast.expressions.Expression;
+import java.util.List;
 
 public class LogStatement extends Statement {
     private List<Expression> expressions;
+
+    public LogStatement(int line, int column) {
+        super(line, column);
+    }
 
     public List<Expression> getExpressions() {
         return expressions;

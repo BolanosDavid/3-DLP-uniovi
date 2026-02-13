@@ -6,6 +6,10 @@ public class Assignment extends Statement {
     private Expression left;
     private Expression right;
 
+    public Assignment(int line, int column) {
+        super(line, column);
+    }
+
     public Expression getLeft() {
         return left;
     }
