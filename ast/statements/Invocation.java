@@ -1,11 +1,15 @@
 package ast.statements;
 
-import java.util.List;
 import ast.expressions.Expression;
+import java.util.List;
 
 public class Invocation extends Statement {
     private Expression function;
     private List<Expression> arguments;
+
+    public Invocation(int line, int column) {
+        super(line, column);
+    }
 
     public Expression getFunction() {
         return function;
