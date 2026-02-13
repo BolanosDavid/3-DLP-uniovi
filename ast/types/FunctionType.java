@@ -29,11 +29,34 @@ public class FunctionType extends Type {
 
     @Override
     public boolean isEquivalentTo(Type type) {
-        return type instanceof FunctionType;
+        if (!(type instanceof FunctionType)) {
+            return false;
+        }
+        FunctionType other = (FunctionType) type;
+        if (!this.returnType.isEquivalentTo(other.returnType)) {
+            return false;
+        }
+        if (this.parameterTypes.size() != other.parameterTypes.size()) {
+            return false;
+        }
+        for (int i = 0; i < parameterTypes.size(); i++) {
+            if (!parameterTypes.get(i).isEquivalentTo(other.parameterTypes.get(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
     public String toString() {
-        return "function";
+        StringBuilder sb = new StringBuilder("(");
+        for (int i = 0; i < parameterTypes.size(); i++) {
+            sb.append(parameterTypes.get(i));
+            if (i < parameterTypes.size() - 1) {
+                sb.append(", ");
+            }
+        }
+        sb.append(") -> ").append(returnType);
+        return sb.toString();
     }
 }
