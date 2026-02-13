@@ -6,6 +6,10 @@ public class FunctionInvocation extends Expression {
     private Expression function;
     private List<Expression> arguments;
 
+    public FunctionInvocation(int line, int column) {
+        super(line, column);
+    }
+
     public Expression getFunction() {
         return function;
     }

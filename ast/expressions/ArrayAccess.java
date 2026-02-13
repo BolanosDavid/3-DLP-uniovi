@@ -4,6 +4,10 @@ public class ArrayAccess extends Expression {
     private Expression array;
     private Expression index;
 
+    public ArrayAccess(int line, int column) {
+        super(line, column);
+    }
+
     public Expression getArray() {
         return array;
     }

@@ -6,6 +6,10 @@ public class Cast extends Expression {
     private Expression expression;
     private Type castType;
 
+    public Cast(int line, int column) {
+        super(line, column);
+    }
+
     public Expression getExpression() {
         return expression;
     }
