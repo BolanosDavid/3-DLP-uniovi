@@ -1,13 +1,18 @@
 package ast.definitions;
 
-import java.util.List;
 import ast.statements.Statement;
 import ast.types.FunctionType;
+import ast.types.Type;
+import java.util.List;
 
 public class FuncDefinition extends Definition {
     private List<VarDefinition> parameters;
     private List<VarDefinition> varDefinitions;
     private List<Statement> statements;
+
+    public FuncDefinition(int line, int column, String name, Type type) {
+        super(line, column, name, type);
+    }
 
     public List<VarDefinition> getParameters() {
         return parameters;
