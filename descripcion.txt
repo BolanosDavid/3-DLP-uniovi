@@ -1,0 +1,16 @@
+
+Elementos léxicos sensibles a mayúsculas/minúsculas.
+
+Elementos:
+
+  Comentarios con // hasta el final de línea
+  Comentarios con varias líneas (de /* hasta */)
+  Identificadores que comienzan con una letra o _ y seguidos de letra, dígito o _
+  Literales Enteros sin signo
+  Literales Reales con punto decimal
+	12.3, 2., .34
+  Literales Reales con formato exponente
+	34.12E-3, 3e3, 2e+5
+  Literales carácter entre '',
+  Literales carácter mediante codigo ASCII '\126'
+  Dos caracteres especiales '\n' y '\t'

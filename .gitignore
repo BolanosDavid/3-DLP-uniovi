@@ -1,0 +1,56 @@
+# ============ ANTLR Generated Files ============
+# Ignorar todos los archivos generados por ANTLR
+src/parser/TSmm.interp
+src/parser/TSmm.tokens
+src/parser/TSmmLexer.java
+src/parser/TSmmLexer.interp
+src/parser/TSmmLexer.tokens
+src/parser/TSmmParser.java
+src/parser/TSmmParserBaseListener.java
+src/parser/TSmmParserBaseVisitor.java
+src/parser/TSmmParserListener.java
+src/parser/TSmmParserVisitor.java
+
+# ============ Compiled Files ============
+# Archivos .class compilados
+*.class
+out/
+bin/
+target/
+
+# ============ IDE Files ============
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# VS Code
+.vscode/
+
+# ============ OS Files ============
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Linux
+*~
+
+# ============ Other ============
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
