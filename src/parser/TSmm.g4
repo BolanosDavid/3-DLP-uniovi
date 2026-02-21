@@ -21,6 +21,7 @@ MID_CHAR: '\\n'
  // Reglas lexicas
 
 LINE_COMMENT: '//' ~[\r\n]* -> skip
+
              ;
 
 BLOCK_COMMENT: '/*' .*? '*/' -> skip

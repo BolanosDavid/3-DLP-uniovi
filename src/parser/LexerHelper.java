@@ -21,38 +21,28 @@ public class LexerHelper {
 		return -1;
 	}
 	public static Character lexemeToChar(String text) {
-		// text viene con las comillas: 'a', '\n', '\126', etc.
-
-		// Caso 1: longitud 3 → carácter normal 'a', 'Z', ' ', etc.
 		if (text.length() == 3) {
-			return text.charAt(1);  // Carácter entre las comillas
+			return text.charAt(1);
 		}
+		String content = text.substring(1, text.length() - 1);
 
-		// Caso 2 y 3: longitud > 3 → secuencias de escape
-		// Extraer contenido sin las comillas
-		String content = text.substring(1, text.length() - 1);  // Quita ' inicial y final
-
-		// Caso 2: caracteres especiales \n y \t
 		if (content.equals("\\n")) {
 			return '\n';
 		}
 		if (content.equals("\\t")) {
 			return '\t';
 		}
-
-		// Caso 3: código ASCII \###
-		// content = "\\126" → extraer "126"
 		if (content.startsWith("\\")) {
-			String digits = content.substring(1);  // Quita la barra invertida
+			String digits = content.substring(1);
 			try {
 				int asciiCode = Integer.parseInt(digits);
-				return (char) asciiCode;  // Convierte código ASCII a char
+				return (char) asciiCode;
 			} catch (NumberFormatException e) {
 				System.err.println("Error parsing ASCII code: " + e);
 			}
 		}
 
-		return null;  // Error: formato no reconocido
+		return null;
 	}
 
 
