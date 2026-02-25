@@ -3,18 +3,18 @@ package ast.expressions;
 import java.util.List;
 
 public class FunctionInvocation extends Expression {
-    private Expression function;
+    private Variable function;
     private List<Expression> arguments;
 
     public FunctionInvocation(int line, int column) {
         super(line, column);
     }
 
-    public Expression getFunction() {
+    public Variable getFunction() {
         return function;
     }
 
-    public void setFunction(Expression function) {
+    public void setFunction(Variable function) {
         this.function = function;
     }
 

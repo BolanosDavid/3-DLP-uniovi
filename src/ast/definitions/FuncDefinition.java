@@ -7,7 +7,6 @@ import java.util.List;
 
 public class FuncDefinition extends Definition {
     private List<VarDefinition> parameters;
-    private List<VarDefinition> varDefinitions;
     private List<Statement> statements;
 
     public FuncDefinition(int line, int column, String name, Type type) {
@@ -20,14 +19,6 @@ public class FuncDefinition extends Definition {
 
     public void setParameters(List<VarDefinition> parameters) {
         this.parameters = parameters;
-    }
-
-    public List<VarDefinition> getVarDefinitions() {
-        return varDefinitions;
-    }
-
-    public void setVarDefinitions(List<VarDefinition> varDefinitions) {
-        this.varDefinitions = varDefinitions;
     }
 
     public List<Statement> getStatements() {
