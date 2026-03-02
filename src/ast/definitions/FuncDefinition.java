@@ -1,13 +1,13 @@
 package ast.definitions;
 
-import ast.statements.Statement;
+import ast.statements.AbstractStatement;
 import ast.types.FunctionType;
 import ast.types.Type;
 import java.util.List;
 
 public class FuncDefinition extends Definition {
     private List<VarDefinition> parameters;
-    private List<Statement> statements;
+    private List<AbstractStatement> statements;
 
     public FuncDefinition(int line, int column, String name, Type type) {
         super(line, column, name, type);
@@ -21,11 +21,11 @@ public class FuncDefinition extends Definition {
         this.parameters = parameters;
     }
 
-    public List<Statement> getStatements() {
+    public List<AbstractStatement> getStatements() {
         return statements;
     }
 
-    public void setStatements(List<Statement> statements) {
+    public void setStatements(List<AbstractStatement> statements) {
         this.statements = statements;
     }
 

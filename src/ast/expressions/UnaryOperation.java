@@ -1,11 +1,12 @@
 package ast.expressions;
 
-public abstract class UnaryOperation extends Expression {
+public abstract class UnaryOperation extends AbstractExpression {
     protected String operator;
-    protected Expression operand;
+    protected Expression expression;
 
-    public UnaryOperation(int line, int column) {
+    public UnaryOperation(int line, int column, Expression expression) {
         super(line, column);
+        this.expression = expression;
     }
 
     public String getOperator() {
@@ -17,10 +18,10 @@ public abstract class UnaryOperation extends Expression {
     }
 
     public Expression getOperand() {
-        return operand;
+        return expression;
     }
 
     public void setOperand(Expression operand) {
-        this.operand = operand;
+        this.expression = operand;
     }
 }

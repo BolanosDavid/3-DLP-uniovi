@@ -1,10 +1,6 @@
 package ast.statements;
 
-import ast.base.AbstractLocatable;
+import ast.base.Locatable;
 
-public abstract class Statement extends AbstractLocatable {
-    
-    public Statement(int line, int column) {
-        super(line, column);
-    }
+public interface Statement extends Locatable {
 }

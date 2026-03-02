@@ -1,38 +1,33 @@
 package ast.statements;
 
 import ast.expressions.Expression;
+
 import java.util.List;
 
-public class IfStatement extends Statement {
+public class IfStatement extends AbstractStatement {
     private Expression condition;
     private List<Statement> thenBody;
     private List<Statement> elseBody;
 
-    public IfStatement(int line, int column) {
+    public IfStatement(int line, int column, Expression condition, List<Statement> thenBody, List<Statement> elseBody) {
         super(line, column);
+        this.condition = condition;
+        this.thenBody.addAll(thenBody);
+        this.elseBody.addAll(elseBody);
     }
 
     public Expression getCondition() {
         return condition;
     }
 
-    public void setCondition(Expression condition) {
-        this.condition = condition;
-    }
 
     public List<Statement> getThenBody() {
         return thenBody;
     }
 
-    public void setThenBody(List<Statement> thenBody) {
-        this.thenBody = thenBody;
-    }
 
     public List<Statement> getElseBody() {
         return elseBody;
     }
 
-    public void setElseBody(List<Statement> elseBody) {
-        this.elseBody = elseBody;
-    }
 }

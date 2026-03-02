@@ -2,27 +2,24 @@ package ast.expressions;
 
 import ast.types.Type;
 
-public class Cast extends Expression {
+public class Cast extends AbstractExpression {
     private Expression expression;
     private Type castType;
 
-    public Cast(int line, int column) {
+    public Cast(int line, int column,Expression expression, Type castType) {
+
         super(line, column);
+        this.expression = expression;
+        this.castType = castType;
     }
 
     public Expression getExpression() {
         return expression;
     }
 
-    public void setExpression(Expression expression) {
-        this.expression = expression;
-    }
 
     public Type getCastType() {
         return castType;
     }
 
-    public void setCastType(Type castType) {
-        this.castType = castType;
-    }
 }

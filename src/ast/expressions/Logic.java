@@ -1,8 +1,7 @@
 package ast.expressions;
 
 public class Logic extends BinaryOperation {
-    
-    public Logic(int line, int column) {
-        super(line, column);
+    public Logic(int line, int column, Expression left, Expression right, String operator) {
+        super(line, column,left,right, operator);
     }
 }

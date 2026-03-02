@@ -1,20 +1,20 @@
 package ast.statements;
 
 import ast.expressions.Expression;
+
 import java.util.List;
 
-public class InputStatement extends Statement {
+public class InputStatement extends AbstractStatement {
     private List<Expression> expressions;
 
-    public InputStatement(int line, int column) {
+    public InputStatement(int line, int column,List<Expression> expressions)
+    {
         super(line, column);
+        this.expressions.addAll(expressions);
     }
 
     public List<Expression> getExpressions() {
         return expressions;
     }
 
-    public void setExpressions(List<Expression> expressions) {
-        this.expressions = expressions;
-    }
 }

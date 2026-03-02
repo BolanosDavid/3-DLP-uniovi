@@ -1,18 +1,18 @@
 package ast.expressions;
 
-public class FieldAccess extends Expression {
-    private Expression record;
+public class FieldAccess extends AbstractExpression {
+    private AbstractExpression record;
     private String fieldName;
 
     public FieldAccess(int line, int column) {
         super(line, column);
     }
 
-    public Expression getRecord() {
+    public AbstractExpression getRecord() {
         return record;
     }
 
-    public void setRecord(Expression record) {
+    public void setRecord(AbstractExpression record) {
         this.record = record;
     }
 

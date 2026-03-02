@@ -1,6 +1,6 @@
 package ast.expressions;
 
-public class Variable extends Expression {
+public class Variable extends AbstractExpression {
     private String name;
 
     public Variable(int line, int column, String name) {

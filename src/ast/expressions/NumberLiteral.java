@@ -1,6 +1,6 @@
 package ast.expressions;
 
-public class NumberLiteral extends Expression {
+public class NumberLiteral extends AbstractExpression {
     private double value;
 
     public NumberLiteral(int line, int column, double value) {
