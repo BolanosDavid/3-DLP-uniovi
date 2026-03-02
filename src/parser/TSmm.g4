@@ -40,45 +40,22 @@ parameters: ID ':' simple_type (',' ID ':' simple_type)*
 main_definition returns[FuncDefinition ast]:
                 'function' 'main' '(' ')' ':' 'void' '{'func_body'}'
                ;
-statement returns [Statement ast]
-locals [List<Expression> exp = new ArrayList<>(); List<Statement> stmts = new ArrayList<>()]:
-    // Escritura
-    'log' e1=expression { $exp.add($e1.ast); }
-    ( ',' e2=expression { $exp.add($e2.ast); } )* ';'
-    { $ast = new LogStatement($e1.ast.line, $e1.ast.column, $exp); }
-
-    // Lectura
-    | 'input' e1=expression { $exp.add($e1.ast); }
-    ( ',' e2=expression { $exp.add($e2.ast); } )* ';'
-    { $ast = new InputStatement($e1.ast.line, $e1.ast.column, $exp); }
-
-    // Asignación
-    | left=expression '=' right=expression ';'
-    { $ast = new Assignment($left.ast.line, $left.ast.column, $left.ast, $right.ast); }
-
-    // If-else
-    | 'if' '(' cond=expression ')' thenBlock=block
-    ( 'else' elseBlock=block { $stmts.addAll($elseBlock.ast); } )?
-    {
-        List<Statement> elseBody = $elseBlock.ctx != null ? $stmts : new ArrayList<>();
-        $ast = new IfStatement($cond.ast.line, $cond.ast.column, $cond.ast, $thenBlock.ast, elseBody);
-    }
-
-    // While
-    | 'while' '(' cond=expression ')' body=block
-    { $ast = new WhileStatement($cond.ast.line, $cond.ast.column, $cond.ast, $body.ast); }
-
-    // Return
-    | 'return' expr=expression ';'
-    { $ast = new ReturnStatement($expr.ast.line, $expr.ast.column, $expr.ast); }
-
-    // Procedimiento
-    | fname=ID '('( arg1=expression { $exp.add($arg1.ast); }( ',' arg2=expression { $exp.add($arg2.ast); } )*)? ')' ';'
-    {Variable funcVar = new Variable($fname.getLine(), $fname.getCharPositionInLine() + 1, $fname.text);
-        $ast = new Invocation($fname.line, $fname.pos + 1, funcVar, $exp);}
-        ;
-
-
+statement returns [Statement ast] locals[List<Expression> exp = new ArrayList<>()]:
+           'log'e1=expression{$exp.add($e1.ast);}(','e2=expression{$exp.add($e2.ast);})*';' {$ast = new LogStatement($exp);}//escritura
+          |'input'e1=expression{$exp.add($e1.ast);}(','e2=expression{$exp.add($e2.ast);})*';'{$ast = new InputStatement($exp);} //lectura
+          /** Para cuando asignamos algo a una variable, podemos también detectar primero que
+          * la primera expresion es asignable: una variable, por ejemplo. Podemos usar esta regla:
+          * l_value: ID ('['expression']')* //Asignacion a Arays
+                   | expression'.'ID //Asignacion a fields
+                   ;
+          */
+          | e1=expression '=' e2=expression';'{$ast = new Assignment($e1.getLine(),$e1.getCharPositionInLine()+1,$e1.ast,$e2.ast);} //asignacion
+          | 'if' '(' e1=expression ')' b1=block ('else' b2=block{$exp.addAll($b2.ast);})?
+           {$ast = new IfStatement($e1.ast,$b1.ast,$exp);}      //sentencia condicional
+          | 'while' '(' e1=expression ')' b1=block {$ast = new WhileStatement($e1.getLine(),$e1.getCharPositionInLine()+1,$e1.ast,$b1.ast);}// sentencia while
+          |'return' e1=expression';' {$ast = new ReturnStatement($e1.getLine(),$e1.getCharPositionInLine()+1,$e1.ast);}//return
+          |ID'('(e1=expression(','e2=expression{$exp.add($e2.ast)})*)?')'';'{$ast = new Invocation($e1.getLine(),$e1.getCharPositionInLine()+1,$e1.ast,$exp);} //procedimiento
+          ;
 
 expression returns [Expression ast]:
           ID'('expression(','expression)*')'
