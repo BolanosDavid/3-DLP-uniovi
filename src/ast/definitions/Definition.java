@@ -1,9 +1,10 @@
 package ast.definitions;
 
 import ast.base.AbstractLocatable;
+import ast.statements.Statement;
 import ast.types.Type;
 
-public abstract class Definition extends AbstractLocatable {
+public abstract class Definition extends AbstractLocatable  {
     protected String name;
     protected Type type;
 

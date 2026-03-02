@@ -7,9 +7,7 @@ grammar TSmm;
     import ast.statements.*;
     import ast.types.*;
 }
-/**
-    Variables: locals
-*/
+
 // Reglas sintactica (minusculas)
 program returns [Program ast] locals [List<Definition> defs = new ArrayList<>()]:
     (definitions {$defs.addAll($definitions.ast);})* EOF {$ast = new Program($defs);}
@@ -18,43 +16,86 @@ definitions returns [List<Definition> ast = new ArrayList<>()]:
     (d1=var_definitions{$ast.addAll($d1.ast);}|d2=func_definitions{$ast.add($d2.ast);})* d3=main_definition {$ast.add($d3.ast);}
     ;
 
-var_definitions returns[List<Definition> ast = new ArrayList<>()] locals[ List<Variable> variables = new ArrayList<>()]:
-               'let' id1=ID{$variables.add(new Variable($id1.getLine(), $id1.getCharPositionInLine()+1, $id1.text));}
-               (',' id2=ID{$variables.add(new Variable($id2.getLine(), $id2.getCharPositionInLine()+1, $id2.text));} )*
-               ':' t1=type ';'{variables.forEach(v -> $ast.add(new VarDefinition(v.line, v.column, v.name, $t1.ast)));}
-              ;
-func_definitions returns[List<Definition> ast]:
-                'function' ID '(' parameters ')' ':' (simple_type | 'void') '{' func_body '}'
-               ;
-func_body returns[List<Statement> ast = new ArrayList<>()]:
-    (var_definitions|statement)*
+var_definitions returns[List<VarDefinition> ast = new ArrayList<>()]
+    locals[List<Variable> variables = new ArrayList<>()]:
+    'let' id1=ID{$variables.add(new Variable($id1.getLine(),
+                                            $id1.getCharPositionInLine()+1,
+                                            $id1.text));}
+    (',' id2=ID{$variables.add(new Variable($id2.getLine(),
+                                            $id2.getCharPositionInLine()+1,
+                                            $id2.text));} )*
+    ':' t1=type ';'
+    {$variables.forEach(v ->$ast
+                            .add(new VarDefinition(v.getLine(),
+                                                   v.getColumn(),
+                                                   v.getName(),
+                                                   $t1.ast)));
+    }
     ;
-parameters: ID ':' simple_type (',' ID ':' simple_type)*
-          | (ID ':' simple_type)?
-          ;
+func_definitions returns[FuncDefinition ast]
+    locals[List<VarDefinition> params = new ArrayList<>(),
+           List<Type> paramTypes = new ArrayList<>(),
+           Type returnType]:
+    'function' id=ID '(' p=parameters{$params = $p.ast;} ')' ':'
+    (st=simple_type{$returnType = $st.ast;} | 'void'{$returnType = VoidType.getInstance();})
+    '{' body=func_body '}'
+    {
+        $params.forEach(param -> $paramTypes.add(param.getType()));
+        FunctionType funcType = new FunctionType($paramTypes, $returnType);
+        $ast = new FuncDefinition($id.getLine(),
+                                  $id.getCharPositionInLine()+1,
+                                  $id.text,
+                                  funcType,
+                                  $params,
+                                  $body.ast);
+    }
+    ;
+
+
+func_body returns[List<Statement> ast = new ArrayList<>()]:
+    (v=var_definitions{$ast.addAll($v.ast);} | s=statement{$ast.add($s.ast);})*
+    ;
+
+parameters returns[List<VarDefinition> ast = new ArrayList<>()]:
+    id1=ID ':' t1=simple_type {$ast.add(new VarDefinition($id1.getLine(), $id1.getCharPositionInLine()+1, $id1.text, $t1.ast));}
+    (',' id2=ID ':' t2=simple_type {$ast.add(new VarDefinition($id2.getLine(), $id2.getCharPositionInLine()+1, $id2.text, $t2.ast));})*
+    | /* vacío - sin parámetros */
+    ;
+
 /**
     Esta regla sintactica se usa para reconocer una función main obligatoria
     (Se añade también en program para poder hacerla obligatoria)
     Esto también se podría hacer en el semántico
 */
 main_definition returns[FuncDefinition ast]:
-                'function' 'main' '(' ')' ':' 'void' '{'func_body'}'
-               ;
-statement returns [Statement ast] locals[List<Expression> exp = new ArrayList<>()]:
-           'log'e1=expression{$exp.add($e1.ast);}(','e2=expression{$exp.add($e2.ast);})*';' {$ast = new LogStatement($exp);}//escritura
-          |'input'e1=expression{$exp.add($e1.ast);}(','e2=expression{$exp.add($e2.ast);})*';'{$ast = new InputStatement($exp);} //lectura
-          /** Para cuando asignamos algo a una variable, podemos también detectar primero que
-          * la primera expresion es asignable: una variable, por ejemplo. Podemos usar esta regla:
-          * l_value: ID ('['expression']')* //Asignacion a Arays
-                   | expression'.'ID //Asignacion a fields
-                   ;
-          */
-          | e1=expression '=' e2=expression';'{$ast = new Assignment($e1.getLine(),$e1.getCharPositionInLine()+1,$e1.ast,$e2.ast);} //asignacion
-          | 'if' '(' e1=expression ')' b1=block ('else' b2=block{$exp.addAll($b2.ast);})?
-           {$ast = new IfStatement($e1.ast,$b1.ast,$exp);}      //sentencia condicional
-          | 'while' '(' e1=expression ')' b1=block {$ast = new WhileStatement($e1.getLine(),$e1.getCharPositionInLine()+1,$e1.ast,$b1.ast);}// sentencia while
-          |'return' e1=expression';' {$ast = new ReturnStatement($e1.getLine(),$e1.getCharPositionInLine()+1,$e1.ast);}//return
-          |ID'('(e1=expression(','e2=expression{$exp.add($e2.ast)})*)?')'';'{$ast = new Invocation($e1.getLine(),$e1.getCharPositionInLine()+1,$e1.ast,$exp);} //procedimiento
+    'function' m='main' '(' ')' ':' 'void' '{' body=func_body '}'
+    {
+        FunctionType funcType = new FunctionType(new ArrayList<>(), VoidType.getInstance());
+        $ast = new FuncDefinition($m.getLine(),
+                                  $m.getCharPositionInLine()+1,
+                                  "main",
+                                  funcType,
+                                  new ArrayList<>(),
+                                  $body.ast);
+    }
+    ;
+
+
+statement returns [Statement ast] locals[List<Expression> exp = new ArrayList<>(), List<Statement> elseStmts = new ArrayList<>()]:
+           'log' e1=expression{$exp.add($e1.ast);}(','e2=expression{$exp.add($e2.ast);} )*';'
+           {$ast = new LogStatement($e1.ast.getLine(),$e1.ast.getColumn(),$exp);}
+          |'input' e1=expression{$exp.add($e1.ast);}(','e2=expression{$exp.add($e2.ast);} )*';'
+           {$ast = new InputStatement($e1.ast.getLine(),$e1.ast.getColumn(),$exp);}
+          | e1=expression '=' e2=expression';'
+           {$ast = new Assignment($e1.ast.getLine(),$e1.ast.getColumn(),$e1.ast,$e2.ast);}
+          | 'if' '(' e1=expression ')' b1=block ('else' b2=block{$elseStmts.addAll($b2.ast);})?
+           {$ast = new IfStatement($e1.ast.getLine(),$e1.ast.getColumn(),$e1.ast,$b1.ast,$elseStmts);}
+          | 'while' '(' e1=expression ')' b1=block
+           {$ast = new WhileStatement($e1.ast.getLine(),$e1.ast.getColumn(),$e1.ast,$b1.ast);}
+          |'return' e1=expression';'
+           {$ast = new ReturnStatement($e1.ast.getLine(),$e1.ast.getColumn(),$e1.ast);}
+          | id=ID'('(e1=expression{$exp.add($e1.ast);}(','e2=expression{$exp.add($e2.ast);} )*)?')'';'
+           {$ast = new Invocation($id.getLine(),$id.getCharPositionInLine()+1,new Variable($id.getLine(),$id.getCharPositionInLine()+1,$id.text),$exp);}
           ;
 
 expression returns [Expression ast]:
@@ -83,8 +124,8 @@ expression returns [Expression ast]:
 
 type returns[Type ast]:
     s=simple_type {$ast = $s.ast;}
-    | a=array_type {$ast = a.ast;}
-    | r=record_type {$ast = r.ast;}
+    | a=array_type {$ast = $a.ast;}
+    | r=record_type {$ast = $r.ast;}
     ;
 block returns[List<Statement> ast = new ArrayList<>()]:
      s1=statement {$ast.add($s1.ast);}

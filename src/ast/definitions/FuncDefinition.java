@@ -1,38 +1,27 @@
 package ast.definitions;
 
-import ast.statements.AbstractStatement;
-import ast.types.FunctionType;
+import ast.statements.Statement;
 import ast.types.Type;
 import java.util.List;
 
 public class FuncDefinition extends Definition {
     private List<VarDefinition> parameters;
-    private List<AbstractStatement> statements;
+    private List<Statement> statements;
 
-    public FuncDefinition(int line, int column, String name, Type type) {
+    public FuncDefinition(int line, int column, String name, Type type, List<VarDefinition> parameters, List<Statement> statements) {
         super(line, column, name, type);
+        this.parameters = parameters;
+        this.statements = statements;
     }
 
     public List<VarDefinition> getParameters() {
         return parameters;
     }
 
-    public void setParameters(List<VarDefinition> parameters) {
-        this.parameters = parameters;
-    }
 
-    public List<AbstractStatement> getStatements() {
+    public List<Statement> getStatements() {
         return statements;
     }
 
-    public void setStatements(List<AbstractStatement> statements) {
-        this.statements = statements;
-    }
 
-    public FunctionType getFunctionType() {
-        if (type instanceof FunctionType) {
-            return (FunctionType) type;
-        }
-        return null;
-    }
 }
