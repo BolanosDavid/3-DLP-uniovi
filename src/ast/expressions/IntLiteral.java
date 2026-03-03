@@ -12,7 +12,4 @@ public class IntLiteral extends AbstractExpression {
         return value;
     }
 
-    public void setValue(int value) {
-        this.value = value;
-    }
 }

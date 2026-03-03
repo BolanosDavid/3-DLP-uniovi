@@ -2,12 +2,13 @@ package ast.statements;
 
 import ast.expressions.Expression;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class IfStatement extends AbstractStatement {
     private Expression condition;
-    private List<Statement> thenBody;
-    private List<Statement> elseBody;
+    private List<Statement> thenBody = new ArrayList<>();
+    private List<Statement> elseBody = new ArrayList<>();
 
     public IfStatement(int line, int column, Expression condition, List<Statement> thenBody, List<Statement> elseBody) {
         super(line, column);

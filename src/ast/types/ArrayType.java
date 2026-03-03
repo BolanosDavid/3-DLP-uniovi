@@ -13,17 +13,11 @@ public class ArrayType extends Type {
         return size;
     }
 
-    public void setSize(int size) {
-        this.size = size;
-    }
 
     public Type getElementType() {
         return elementType;
     }
 
-    public void setElementType(Type elementType) {
-        this.elementType = elementType;
-    }
 
     @Override
     public boolean isEquivalentTo(Type type) {

@@ -12,7 +12,4 @@ public class CharLiteral extends AbstractExpression {
         return value;
     }
 
-    public void setValue(char value) {
-        this.value = value;
-    }
 }

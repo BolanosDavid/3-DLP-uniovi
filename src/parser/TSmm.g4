@@ -80,45 +80,76 @@ main_definition returns[FuncDefinition ast]:
     }
     ;
 
-
+/** Statements */
 statement returns [Statement ast] locals[List<Expression> exp = new ArrayList<>(), List<Statement> elseStmts = new ArrayList<>()]:
+            /** Log */
            'log' e1=expression{$exp.add($e1.ast);}(','e2=expression{$exp.add($e2.ast);} )*';'
            {$ast = new LogStatement($e1.ast.getLine(),$e1.ast.getColumn(),$exp);}
+            /** Input */
           |'input' e1=expression{$exp.add($e1.ast);}(','e2=expression{$exp.add($e2.ast);} )*';'
            {$ast = new InputStatement($e1.ast.getLine(),$e1.ast.getColumn(),$exp);}
+            /** Asignacion */
           | e1=expression '=' e2=expression';'
            {$ast = new Assignment($e1.ast.getLine(),$e1.ast.getColumn(),$e1.ast,$e2.ast);}
+            /** If */
           | 'if' '(' e1=expression ')' b1=block ('else' b2=block{$elseStmts.addAll($b2.ast);})?
            {$ast = new IfStatement($e1.ast.getLine(),$e1.ast.getColumn(),$e1.ast,$b1.ast,$elseStmts);}
+            /** While */
           | 'while' '(' e1=expression ')' b1=block
            {$ast = new WhileStatement($e1.ast.getLine(),$e1.ast.getColumn(),$e1.ast,$b1.ast);}
+            /** Return */
           |'return' e1=expression';'
            {$ast = new ReturnStatement($e1.ast.getLine(),$e1.ast.getColumn(),$e1.ast);}
+          /** Procedimiento */
           | id=ID'('(e1=expression{$exp.add($e1.ast);}(','e2=expression{$exp.add($e2.ast);} )*)?')'';'
            {$ast = new Invocation($id.getLine(),$id.getCharPositionInLine()+1,new Variable($id.getLine(),$id.getCharPositionInLine()+1,$id.text),$exp);}
           ;
 
-expression returns [Expression ast]:
-          ID'('expression(','expression)*')'
-          | '('expression')'
-          | expression'['expression']'
-          | expression'.'ID
+/** Expression */
+expression returns [Expression ast] locals[List<Expression> exp = new ArrayList<>()]:
+          /** Invocacion a función*/
+          id=ID '(' (e1=expression {$exp.add($e1.ast);} (',' e2=expression {$exp.add($e2.ast);})*)? ')'
+                {
+                    $ast = new FunctionInvocation($id.getLine(),
+                                                  $id.getCharPositionInLine()+1,
+                                                  new Variable($id.getLine(), $id.getCharPositionInLine()+1, $id.text),
+                                                  $exp);
+                }
+          /** Priorizacion por parentesis */
+          | '('e1=expression')' {$ast = $e1.ast;}
+          /** Acceso a Arrays*/
+          | e1=expression'['e2=expression']' {$ast = new ArrayAccess($e1.ast.getLine(),$e1.ast.getColumn(),$e1.ast,$e2.ast);}
+          /** Acceso a Fields */
+          | e1=expression'.'i1=ID {$ast = new FieldAccess($e1.ast.getLine(),$e1.ast.getColumn(),$e1.ast,$i1.text);}
           /**
             Aquí podríamos identificar que el casteo solo permite tipos simples tanto en el
             sintactico como en el semantico. Para hacerlo en el sintactico, basta con cambiar
             esta regla para que en vez de aceptar 'type' acepte simple type
           */
+          /** Cast */
           | '('e1=expression 'as' t1=type')' {$ast = new Cast($e1.ast.getLine(), $e1.ast.getColumn(), $e1.ast, $t1.ast);}
+          /** Unary Minus */
           | '-' e1=expression {$ast = new UnaryMinus($e1.ast.getLine(), $e1.ast.getColumn(), $e1.ast);}
+          /** Unary Not */
           | '!' e1=expression {$ast = new UnaryNot($e1.ast.getLine(), $e1.ast.getColumn(), $e1.ast);}
+          /** Division, Multiplicación y módulo */
           | e1=expression op=('/'|'*'| '%') e2=expression {$ast = new Arithmetic($e1.ast.getLine(),$e1.ast.getColumn(),$e1.ast,$e2.ast,$op.text);}
-          //Siempre se sacan la linea y columna de la primera expresion
+
+          /** Siempre se sacan la linea y columna de la primera expresion
+            Suma y Resta
+          */
           | e1=expression op=('+'|'-') e2=expression {$ast = new Arithmetic($e1.ast.getLine(),$e1.ast.getColumn(),$e1.ast,$e2.ast,$op.text);}
+           /** Operaciones lógicas( Comparaciones ) */
           | e1=expression op=('>'|'>='|'<'|'<='|'!='|'==') e2=expression {$ast = new Comparison($e1.ast.getLine(),$e1.ast.getColumn(),$e1.ast,$e2.ast,$op.text);}
+          /** Operaciones Lógicas (AND  y OR)*/
           | e1=expression op=('&&'|'||') e2=expression {$ast = new Arithmetic($e1.ast.getLine(),$e1.ast.getColumn(),$e1.ast,$e2.ast,$op.text);}
-          | i=ID
+          /** Variable */
+          | i=ID {$ast = new Variable($i.getLine(),$i.getCharPositionInLine()+1,$i.text);}
+          /** Constante entera */
           | i=INT_CONSTANT {$ast = new IntLiteral($i.getLine(),$i.getCharPositionInLine()+1,LexerHelper.lexemeToInt($i.text));}
+          /** Constante real */
           | i=REAL_CONSTANT {$ast = new NumberLiteral($i.getLine(),$i.getCharPositionInLine()+1,LexerHelper.lexemeToReal($i.text));}
+          /** Constante char */
           | i=CHAR_CONSTANT {$ast = new CharLiteral($i.getLine(),$i.getCharPositionInLine()+1,LexerHelper.lexemeToChar($i.text));}
            ;
 
@@ -139,15 +170,23 @@ simple_type returns[Type ast]:
 
 
 array_type returns[Type ast]:
-('['i1=INT_CONSTANT']') t1=simple_type {$ast = new ArrayType(LexerHelper.lexemeToInt($i1.text), $t1.ast);}
+('['i1=INT_CONSTANT']') t1=type {$ast = new ArrayType(LexerHelper.lexemeToInt($i1.text), $t1.ast);}
                              ;
-recordfield returns [RecordField ast]:
-    'let' i1=ID ':' t1=type ';'
-    { $ast = new RecordField($i1.getLine(), $i1.getCharPositionInLine()+1, $i1.text, $t1.ast); }
+recordfield returns [List<RecordField> ast = new ArrayList<>()]:
+    'let' i1=ID
+    {$ast.add(new RecordField($i1.getLine(), $i1.getCharPositionInLine()+1, $i1.text, null));}
+    ( ',' i2=ID {$ast.add(new RecordField($i2.getLine(), $i2.getCharPositionInLine()+1, $i2.text, null));})*
+    ':' t1=type ';'
+    {
+        for(RecordField field : $ast) {
+            field.setType($t1.ast);
+        }
+    }
     ;
 
+
 record_type returns [RecordType ast] locals[List<RecordField> fields = new ArrayList<>()]:
-'[' (r=recordfield{$fields.add($r.ast);})* ']' { $ast = new RecordType($fields); }
+'[' (r=recordfield{$fields.addAll($r.ast);})* ']' { $ast = new RecordType($fields); }
                                     ;
 // Reglas lexicas (mayusculas)
 // Fragmentos

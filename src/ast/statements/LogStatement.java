@@ -2,10 +2,11 @@ package ast.statements;
 
 import ast.expressions.Expression;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LogStatement extends AbstractStatement {
-    private List<Expression> expressions;
+    private List<Expression> expressions = new ArrayList<>();
 
     public LogStatement(int line, int column, List<Expression> expressions) {
         super(line, column);

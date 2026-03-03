@@ -1,28 +1,23 @@
 package ast.expressions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FunctionInvocation extends AbstractExpression {
     private Variable function;
-    private List<AbstractExpression> arguments;
+    private List<Expression> arguments = new ArrayList<>();
 
-    public FunctionInvocation(int line, int column) {
+    public FunctionInvocation(int line, int column, Variable function, List<Expression> arguments) {
         super(line, column);
+        this.function = function;
+        this.arguments.addAll(arguments);
     }
 
     public Variable getFunction() {
         return function;
     }
 
-    public void setFunction(Variable function) {
-        this.function = function;
-    }
-
-    public List<AbstractExpression> getArguments() {
+    public List<Expression> getArguments() {
         return arguments;
-    }
-
-    public void setArguments(List<AbstractExpression> arguments) {
-        this.arguments = arguments;
     }
 }

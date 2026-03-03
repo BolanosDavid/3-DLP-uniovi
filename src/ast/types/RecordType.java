@@ -1,21 +1,20 @@
 package ast.types;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RecordType extends Type {
-    private List<RecordField> fields;
+    private List<RecordField> fields = new ArrayList<>();
 
-    public RecordType(List<RecordField> fields) {
-        this.fields = fields;
+    public RecordType(List<RecordField> fields)
+    {
+        this.fields.addAll(fields);
     }
 
     public List<RecordField> getFields() {
         return fields;
     }
 
-    public void setFields(List<RecordField> fields) {
-        this.fields = fields;
-    }
 
     public RecordField getField(String name) {
         for (RecordField field : fields) {

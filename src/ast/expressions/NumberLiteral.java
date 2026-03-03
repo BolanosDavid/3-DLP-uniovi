@@ -12,7 +12,4 @@ public class NumberLiteral extends AbstractExpression {
         return value;
     }
 
-    public void setValue(double value) {
-        this.value = value;
-    }
 }

@@ -2,11 +2,12 @@ package ast.statements;
 
 import ast.expressions.Expression;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Invocation extends AbstractStatement {
     private Expression function;
-    private List<Expression> arguments;
+    private List<Expression> arguments = new ArrayList<>();
 
     public Invocation(int line, int column, Expression function, List<Expression> arguments) {
         super(line, column);
