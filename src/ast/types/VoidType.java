@@ -1,6 +1,8 @@
 package ast.types;
 
-public class VoidType extends Type {
+import ast.Type;
+
+public class VoidType extends AbstractType {
     private static VoidType instance;
 
     private VoidType() {

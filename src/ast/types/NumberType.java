@@ -1,6 +1,8 @@
 package ast.types;
 
-public class NumberType extends Type {
+import ast.Type;
+
+public class NumberType extends AbstractType {
     private static NumberType instance;
 
     private NumberType() {

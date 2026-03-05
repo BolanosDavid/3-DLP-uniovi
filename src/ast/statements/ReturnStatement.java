@@ -1,6 +1,6 @@
 package ast.statements;
 
-import ast.expressions.Expression;
+import ast.Expression;
 
 public class ReturnStatement extends AbstractStatement {
     private Expression expression;

@@ -1,6 +1,8 @@
 package ast.types;
 
-public class ArrayType extends Type {
+import ast.Type;
+
+public class ArrayType extends AbstractType {
     private int size;
     private Type elementType;
 

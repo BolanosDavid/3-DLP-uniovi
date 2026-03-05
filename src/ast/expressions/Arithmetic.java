@@ -1,5 +1,7 @@
 package ast.expressions;
 
+import ast.Expression;
+
 public class Arithmetic extends BinaryOperation {
 
     public Arithmetic(int line, int column, Expression left, Expression right, String operator) {

@@ -1,9 +1,11 @@
 package ast.types;
 
+import ast.Type;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecordType extends Type {
+public class RecordType extends AbstractType {
     private List<RecordField> fields = new ArrayList<>();
 
     public RecordType(List<RecordField> fields)

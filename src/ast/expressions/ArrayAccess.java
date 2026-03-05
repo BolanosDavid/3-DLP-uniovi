@@ -1,5 +1,7 @@
 package ast.expressions;
 
+import ast.Expression;
+
 public class ArrayAccess extends AbstractExpression {
     private Expression array;
     private Expression index;

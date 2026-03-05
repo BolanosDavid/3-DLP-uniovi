@@ -1,6 +1,8 @@
 package ast.types;
 
-public class IntType extends Type {
+import ast.Type;
+
+public class IntType extends AbstractType {
     private static IntType instance;
 
     private IntType() {

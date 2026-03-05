@@ -1,5 +1,6 @@
 package ast.statements;
 
+import ast.Statement;
 import ast.base.AbstractLocatable;
 
 public abstract class AbstractStatement extends AbstractLocatable implements Statement {

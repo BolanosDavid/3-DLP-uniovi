@@ -1,15 +1,15 @@
 package ast.definitions;
 
+import ast.Definition;
+import ast.Type;
 import ast.base.AbstractLocatable;
-import ast.statements.Statement;
-import ast.types.Type;
 
 public abstract class
-Definition extends AbstractLocatable  {
+AbstractDefinition extends AbstractLocatable implements Definition {
     protected String name;
     protected Type type;
 
-    public Definition(int line, int column, String name, Type type) {
+    public AbstractDefinition(int line, int column, String name, Type type) {
         super(line, column);
         this.name = name;
         this.type = type;

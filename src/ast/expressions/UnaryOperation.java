@@ -1,5 +1,7 @@
 package ast.expressions;
 
+import ast.Expression;
+
 public abstract class UnaryOperation extends AbstractExpression {
     protected String operator;
     protected Expression expression;

@@ -1,6 +1,8 @@
 package ast.types;
 
-public class CharType extends Type {
+import ast.Type;
+
+public class CharType extends AbstractType {
     private static CharType instance;
 
     private CharType() {

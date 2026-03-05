@@ -1,5 +1,8 @@
 package ast.base;
 
+import ast.ASTNode;
+import ast.Locatable;
+
 public abstract class AbstractLocatable implements ASTNode, Locatable {
     protected int line;
     protected int column;

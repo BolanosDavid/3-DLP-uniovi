@@ -1,11 +1,11 @@
 package ast.statements;
 
-import ast.expressions.Expression;
+import ast.Expression;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Invocation extends AbstractStatement {
+public class Invocation extends AbstractStatement implements Expression{
     private Expression function;
     private List<Expression> arguments = new ArrayList<>();
 

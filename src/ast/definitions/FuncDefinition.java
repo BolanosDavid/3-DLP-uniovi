@@ -1,49 +1,48 @@
 package ast.definitions;
 
-import ast.statements.Statement;
+import ast.Statement;
+import ast.Type;
 import ast.types.FunctionType;
-import ast.types.Type;
+import ast.types.AbstractType;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FuncDefinition extends Definition {
-    private List<VarDefinition> parameters = new ArrayList<>();
+public class FuncDefinition extends AbstractDefinition {
     private List<Statement> statements = new ArrayList<>();
 
-    public FuncDefinition(int line, int column, String name, Type type, List<VarDefinition> parameters, List<Statement> statements) {
-        super(line, column, name, type);
-        this.parameters.addAll(parameters);
+    public FuncDefinition(int line, int column, String name, Type retType, List<VarDefinition> parameters, List<Statement> statements) {
+        super(line, column, name, new FunctionType(parameters, retType));
         this.statements.addAll(statements);
     }
-
-    public List<VarDefinition> getParameters() {
-        return parameters;
-    }
-
-
     public List<Statement> getStatements() {
         return statements;
     }
-
     @Override
     public String toString() {
-        String params = parameters.stream()
-                .map(Object::toString)
-                .reduce((a, b) -> a + ", " + b)
-                .orElse("");
+        FunctionType funcType = (FunctionType) this.type;
+        StringBuilder sb = new StringBuilder();
+        sb.append("function ").append(name).append("(");
 
-        String body = statements.stream()
-                .map(stmt -> "    " + stmt)
-                .reduce((a, b) -> a + "\n" + b)
-                .orElse("");
+        List<VarDefinition> params = funcType.getParameters();
+        for (int i = 0; i < params.size(); i++) {
+            VarDefinition param = params.get(i);
+            sb.append(param.getName()).append(": ").append(param.getType());
+            if (i < params.size() - 1) {
+                sb.append(", ");
+            }
+        }
 
-        String returnType = (type instanceof FunctionType)
-                ? ((FunctionType) type).getReturnType().toString()
-                : type.toString();
+        sb.append("): ").append(funcType.getReturnType()).append(" {\n");
 
-        return "function " + name + "(" + params + ") : " + returnType + " {\n" +
-                body + "\n" +
-                "} [" + line + ":" + column + "]";
+        for (Statement stmt : statements) {
+            sb.append("    ").append(stmt.toString()).append("\n");
+        }
+
+        sb.append("}");
+
+        return sb.toString();
     }
+
+
 }

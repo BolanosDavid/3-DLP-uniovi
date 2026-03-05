@@ -1,9 +1,10 @@
 package ast.expressions;
 
+import ast.Expression;
+import ast.Type;
 import ast.base.AbstractLocatable;
-import ast.types.Type;
 
-public abstract class AbstractExpression extends AbstractLocatable implements Expression{
+public abstract class AbstractExpression extends AbstractLocatable implements Expression {
     protected Type type;
 
     public AbstractExpression(int line, int column) {

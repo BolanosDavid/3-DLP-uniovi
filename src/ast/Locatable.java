@@ -1,4 +1,4 @@
-package ast.base;
+package ast;
 
 public interface Locatable {
     int getLine();

@@ -1,9 +1,8 @@
-import ast.base.ASTNode;
+import ast.ASTNode;
 import parser.*;
 
 import org.antlr.v4.runtime.*;
 
-import ast.program.Program;
 import introspector.model.IntrospectorModel;
 import introspector.view.IntrospectorView;
 

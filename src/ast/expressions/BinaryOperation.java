@@ -1,5 +1,7 @@
 package ast.expressions;
 
+import ast.Expression;
+
 public abstract class BinaryOperation extends AbstractExpression {
     protected Expression left;
     protected String operator;

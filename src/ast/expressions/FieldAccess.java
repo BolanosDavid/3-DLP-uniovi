@@ -1,5 +1,7 @@
 package ast.expressions;
 
+import ast.Expression;
+
 public class FieldAccess extends AbstractExpression {
     private Expression record;
     private String fieldName;

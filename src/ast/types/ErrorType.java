@@ -1,6 +1,8 @@
 package ast.types;
 
-public class ErrorType extends Type {
+import ast.Type;
+
+public class ErrorType extends AbstractType {
     private static ErrorType instance;
 
     private ErrorType() {

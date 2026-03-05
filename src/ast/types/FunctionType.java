@@ -1,26 +1,27 @@
 package ast.types;
 
+import ast.Type;
+import ast.definitions.VarDefinition;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class FunctionType extends Type {
-    private List<Type> parameterTypes = new ArrayList<>();
+public class FunctionType extends AbstractType {
+    private List<VarDefinition> parameters = new ArrayList<>();
     private Type returnType;
 
-    public FunctionType(List<Type> parameterTypes, Type returnType) {
-        this.parameterTypes.addAll(parameterTypes);
+    public FunctionType(List<VarDefinition> parameters, Type returnType) {
+        this.parameters.addAll(parameters);
         this.returnType = returnType;
     }
 
-    public List<Type> getParameterTypes() {
-        return parameterTypes;
+    public List<VarDefinition> getParameters() {
+        return parameters;
     }
-
 
     public Type getReturnType() {
         return returnType;
     }
-
 
     @Override
     public boolean isEquivalentTo(Type type) {
@@ -31,11 +32,11 @@ public class FunctionType extends Type {
         if (!this.returnType.isEquivalentTo(other.returnType)) {
             return false;
         }
-        if (this.parameterTypes.size() != other.parameterTypes.size()) {
+        if (this.parameters.size() != other.parameters.size()) {
             return false;
         }
-        for (int i = 0; i < parameterTypes.size(); i++) {
-            if (!parameterTypes.get(i).isEquivalentTo(other.parameterTypes.get(i))) {
+        for (int i = 0; i < parameters.size(); i++) {
+            if (!parameters.get(i).getType().isEquivalentTo(other.parameters.get(i).getType())) {
                 return false;
             }
         }
@@ -45,9 +46,9 @@ public class FunctionType extends Type {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("(");
-        for (int i = 0; i < parameterTypes.size(); i++) {
-            sb.append(parameterTypes.get(i));
-            if (i < parameterTypes.size() - 1) {
+        for (int i = 0; i < parameters.size(); i++) {
+            sb.append(parameters.get(i).getType());
+            if (i < parameters.size() - 1) {
                 sb.append(", ");
             }
         }
