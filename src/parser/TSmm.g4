@@ -139,7 +139,7 @@ expression returns [Expression ast] locals[List<Expression> exp = new ArrayList<
            /** Operaciones lógicas( Comparaciones ) */
           | e1=expression op=('>'|'>='|'<'|'<='|'!='|'==') e2=expression {$ast = new Comparison($e1.ast.getLine(),$e1.ast.getColumn(),$e1.ast,$e2.ast,$op.text);}
           /** Operaciones Lógicas (AND  y OR)*/
-          | e1=expression op=('&&'|'||') e2=expression {$ast = new Arithmetic($e1.ast.getLine(),$e1.ast.getColumn(),$e1.ast,$e2.ast,$op.text);}
+          | e1=expression op=('&&'|'||') e2=expression {$ast = new Logic($e1.ast.getLine(),$e1.ast.getColumn(),$e1.ast,$e2.ast,$op.text);}
           /** Variable */
           | i=ID {$ast = new Variable($i.getLine(),$i.getCharPositionInLine()+1,$i.text);}
           /** Constante entera */
