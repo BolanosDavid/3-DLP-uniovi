@@ -10,10 +10,11 @@ grammar TSmm;
 
 // Reglas sintactica (minusculas)
 program returns [Program ast] locals [List<Definition> defs = new ArrayList<>()]:
-    (definitions {$defs.addAll($definitions.ast);})* EOF {$ast = new Program($defs);}
+    (d=definitions { $defs.addAll($d.ast); })*  m=main_definition { $defs.add($m.ast); } EOF {$ast = new Program($defs);}
     ;
 definitions returns [List<Definition> ast = new ArrayList<>()]:
-    (d1=var_definitions{$ast.addAll($d1.ast);}|d2=func_definitions{$ast.add($d2.ast);})* d3=main_definition {$ast.add($d3.ast);}
+      d1=var_definitions  { $ast.addAll($d1.ast); }
+    | d2=func_definitions { $ast.add($d2.ast); }
     ;
 
 var_definitions returns[List<VarDefinition> ast = new ArrayList<>()]
@@ -53,7 +54,8 @@ func_definitions returns[FuncDefinition ast]
 
 
 func_body returns[List<Statement> ast = new ArrayList<>()]:
-    (v=var_definitions{$ast.addAll($v.ast);} | s=statement{$ast.add($s.ast);})*
+    (v=var_definitions {$ast.addAll($v.ast);})*
+    (s=statement {$ast.add($s.ast);})*
     ;
 
 parameters returns[List<VarDefinition> ast = new ArrayList<>()]:
@@ -127,7 +129,7 @@ expression returns [Expression ast] locals[List<Expression> exp = new ArrayList<
             esta regla para que en vez de aceptar 'type' acepte simple type
           */
           /** Cast */
-          | '('e1=expression 'as' t1=type')' {$ast = new Cast($e1.ast.getLine(), $e1.ast.getColumn(), $e1.ast, $t1.ast);}
+          | '('e1=expression 'as' t1=simple_type')' {$ast = new Cast($e1.ast.getLine(), $e1.ast.getColumn(), $e1.ast, $t1.ast);}
           /** Unary Minus */
           | '-' e1=expression {$ast = new UnaryMinus($e1.ast.getLine(), $e1.ast.getColumn(), $e1.ast);}
           /** Unary Not */
@@ -142,7 +144,7 @@ expression returns [Expression ast] locals[List<Expression> exp = new ArrayList<
            /** Operaciones lógicas( Comparaciones ) */
           | e1=expression op=('>'|'>='|'<'|'<='|'!='|'==') e2=expression {$ast = new Comparison($e1.ast.getLine(),$e1.ast.getColumn(),$e1.ast,$e2.ast,$op.text);}
           /** Operaciones Lógicas (AND  y OR)*/
-          | e1=expression op=('&&'|'||') e2=expression {$ast = new Arithmetic($e1.ast.getLine(),$e1.ast.getColumn(),$e1.ast,$e2.ast,$op.text);}
+          | e1=expression op=('&&'|'||') e2=expression {$ast = new Logic($e1.ast.getLine(),$e1.ast.getColumn(),$e1.ast,$e2.ast,$op.text);}
           /** Variable */
           | i=ID {$ast = new Variable($i.getLine(),$i.getCharPositionInLine()+1,$i.text);}
           /** Constante entera */

@@ -11,4 +11,9 @@ public class Variable extends AbstractExpression {
     public String getName() {
         return name;
     }
+    @Override
+    public String toString() {
+        return name;
+    }
+
 }

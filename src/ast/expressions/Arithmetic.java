@@ -6,4 +6,9 @@ public class Arithmetic extends BinaryOperation {
 
         super(line, column,left, right, operator);
     }
+
+    @Override
+    public String toString() {
+        return left + " " + operator + " " + right;
+    }
 }

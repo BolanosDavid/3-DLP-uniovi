@@ -17,4 +17,8 @@ public class ArrayAccess extends AbstractExpression {
     public Expression getIndex() {
         return index;
     }
+    @Override
+    public String toString() {
+        return array + "[" + index + "]";
+    }
 }

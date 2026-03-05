@@ -24,4 +24,16 @@ public class WhileStatement extends AbstractStatement {
         return body;
     }
 
+    @Override
+    public String toString() {
+        String bodyStr = body.stream()
+                .map(Object::toString)
+                .map(s -> "    " + s.replace("\n", "\n    "))
+                .reduce((a, b) -> a + "\n" + b)
+                .orElse("");
+
+        return "while (" + condition + ") {\n" +
+                bodyStr + "\n" +
+                "}";
+    }
 }

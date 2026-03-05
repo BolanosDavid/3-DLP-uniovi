@@ -17,5 +17,13 @@ public class InputStatement extends AbstractStatement {
     public List<Expression> getExpressions() {
         return expressions;
     }
+    @Override
+    public String toString() {
+        String exprStr = expressions.stream()
+                .map(Object::toString)
+                .reduce((a, b) -> a + ", " + b)
+                .orElse("");
 
+        return "input " + exprStr + ";";
+    }
 }

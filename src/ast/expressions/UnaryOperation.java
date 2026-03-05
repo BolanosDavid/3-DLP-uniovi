@@ -4,9 +4,10 @@ public abstract class UnaryOperation extends AbstractExpression {
     protected String operator;
     protected Expression expression;
 
-    public UnaryOperation(int line, int column, Expression expression) {
+    public UnaryOperation(int line, int column, Expression expression, String operator) {
         super(line, column);
         this.expression = expression;
+        this.operator = operator;
     }
 
     public String getOperator() {

@@ -17,4 +17,8 @@ public class FieldAccess extends AbstractExpression {
     public String getFieldName() {
         return fieldName;
     }
+    @Override
+    public String toString() {
+        return record + "." + fieldName;
+    }
 }

@@ -22,4 +22,8 @@ public class Cast extends AbstractExpression {
         return castType;
     }
 
+    @Override
+    public String toString() {
+        return "(" + expression + " as " + castType + ")";
+    }
 }

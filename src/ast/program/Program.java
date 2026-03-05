@@ -16,5 +16,12 @@ public class Program implements ASTNode {
     public List<Definition> getDefinitions() {
         return definitions;
     }
+    @Override
+    public String toString() {
+        return definitions.stream()
+                .map(Object::toString)
+                .reduce((a, b) -> a + "\n\n" + b)
+                .orElse("");
+    }
 
 }

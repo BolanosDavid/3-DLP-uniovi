@@ -16,6 +16,15 @@ public class FunctionInvocation extends AbstractExpression {
     public Variable getFunction() {
         return function;
     }
+    @Override
+    public String toString() {
+        String argsStr = arguments.stream()
+                .map(Object::toString)
+                .reduce((a, b) -> a + ", " + b)
+                .orElse("");
+
+        return function + "(" + argsStr + ")";
+    }
 
     public List<Expression> getArguments() {
         return arguments;

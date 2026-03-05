@@ -23,4 +23,13 @@ public class Invocation extends AbstractStatement {
         return arguments;
     }
 
+    @Override
+    public String toString() {
+        String argsStr = arguments.stream()
+                .map(Object::toString)
+                .reduce((a, b) -> a + ", " + b)
+                .orElse("");
+
+        return function + "(" + argsStr + ");";
+    }
 }

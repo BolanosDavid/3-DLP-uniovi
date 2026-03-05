@@ -31,4 +31,30 @@ public class IfStatement extends AbstractStatement {
         return elseBody;
     }
 
+    @Override
+    public String toString() {
+        String thenStr = thenBody.stream()
+                .map(Object::toString)
+                .map(s -> "    " + s.replace("\n", "\n    "))
+                .reduce((a, b) -> a + "\n" + b)
+                .orElse("");
+
+        String elseStr = elseBody.stream()
+                .map(Object::toString)
+                .map(s -> "    " + s.replace("\n", "\n    "))
+                .reduce((a, b) -> a + "\n" + b)
+                .orElse("");
+
+        if (elseBody.isEmpty()) {
+            return "if (" + condition + ") {\n" +
+                    thenStr + "\n" +
+                    "}";
+        }
+
+        return "if (" + condition + ") {\n" +
+                thenStr + "\n" +
+                "} else {\n" +
+                elseStr + "\n" +
+                "}";
+    }
 }

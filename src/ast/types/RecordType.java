@@ -42,17 +42,14 @@ public class RecordType extends Type {
         }
         return true;
     }
-
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("record {");
-        for (int i = 0; i < fields.size(); i++) {
-            sb.append(fields.get(i).getName()).append(": ").append(fields.get(i).getType());
-            if (i < fields.size() - 1) {
-                sb.append(", ");
-            }
-        }
-        sb.append("}");
-        return sb.toString();
+        String fieldsStr = fields.stream()
+                .map(Object::toString)
+                .reduce((a, b) -> a + ", " + b)
+                .orElse("");
+
+        return "record(" + fieldsStr + ")";
     }
+
 }
