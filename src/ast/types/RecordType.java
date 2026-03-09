@@ -17,7 +17,6 @@ public class RecordType extends AbstractType {
         return fields;
     }
 
-
     public RecordField getField(String name) {
         for (RecordField field : fields) {
             if (field.getName().equals(name)) {
@@ -38,20 +37,38 @@ public class RecordType extends AbstractType {
         }
         for (int i = 0; i < fields.size(); i++) {
             if (!fields.get(i).getName().equals(other.fields.get(i).getName()) ||
-                !fields.get(i).getType().isEquivalentTo(other.fields.get(i).getType())) {
+                    !fields.get(i).getType().isEquivalentTo(other.fields.get(i).getType())) {
                 return false;
             }
         }
         return true;
     }
+
     @Override
     public String toString() {
-        String fieldsStr = fields.stream()
-                .map(Object::toString)
-                .reduce((a, b) -> a + ", " + b)
-                .orElse("");
-
-        return "record(" + fieldsStr + ")";
+        return toStringWithIndent("");
     }
 
+    private String toStringWithIndent(String currentIndent) {
+        if (fields.isEmpty()) {
+            return "[]";
+        }
+
+        String nextIndent = currentIndent + "    ";
+
+        StringBuilder sb = new StringBuilder("[\n");
+        for (RecordField field : fields) {
+            sb.append(nextIndent).append("let ").append(field.getName()).append(": ");
+
+            if (field.getType() instanceof RecordType) {
+                sb.append(((RecordType) field.getType()).toStringWithIndent(nextIndent));
+            } else {
+                sb.append(field.getType());
+            }
+
+            sb.append(";\n");
+        }
+        sb.append(currentIndent).append("]");
+        return sb.toString();
+    }
 }
