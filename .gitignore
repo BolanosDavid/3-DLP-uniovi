@@ -6,10 +6,10 @@ src/parser/TSmmLexer.java
 src/parser/TSmmLexer.interp
 src/parser/TSmmLexer.tokens
 src/parser/TSmmParser.java
-src/parser/TSmmParserBaseListener.java
-src/parser/TSmmParserBaseVisitor.java
-src/parser/TSmmParserListener.java
-src/parser/TSmmParserVisitor.java
+src/parser/TSmmBaseListener.java
+src/parser/TSmmBaseVisitor.java
+src/parser/TSmmListener.java
+src/parser/TSmmVisitor.java
 
 # ============ Compiled Files ============
 # Archivos .class compilados
