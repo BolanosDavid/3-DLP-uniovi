@@ -1,0 +1,10 @@
+let tuple: [ 
+	let key:int;	
+	let value:int;	
+	let key:number; // Error: duplicated field
+];
+
+// Main program
+function main(): void {
+	tuple.key = 0;
+}

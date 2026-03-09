@@ -1,10 +1,10 @@
 grammar TSmm;	
 @header{
+    import java.util.*;
     import ast.*;
     import ast.base.*;
     import ast.definitions.*;
     import ast.expressions.*;
-    import ast.program.*;
     import ast.statements.*;
     import ast.types.*;
 }
@@ -51,7 +51,7 @@ func_definitions returns[FuncDefinition ast]
 
 
 func_body returns[List<Statement> ast = new ArrayList<>()]:
-    (v=var_definitions{$ast.addAll($v.ast);} | s=statement{$ast.add($s.ast);})*
+    (v=var_definitions{$ast.addAll($v.ast);})* (s=statement{$ast.add($s.ast);})*
     ;
 
 parameters returns[List<VarDefinition> ast = new ArrayList<>()]:
@@ -183,7 +183,20 @@ recordfield returns [List<RecordField> ast = new ArrayList<>()]:
 
 
 record_type returns [RecordType ast] locals[List<RecordField> fields = new ArrayList<>()]:
-'[' (r=recordfield{$fields.addAll($r.ast);})* ']' { $ast = new RecordType($fields); }
+'[' (r=recordfield{$fields.addAll($r.ast);})* ']'
+{
+    Set<String> recordFieldNames = new HashSet<>();
+
+    for(RecordField r : $fields){
+        if(!recordFieldNames.add(r.getName())){
+            ErrorType error = new ErrorType(
+                "Ya existe un record field con el nombre '" + r.getName() + "'",
+                new AbstractLocatable(r.getLine(), r.getColumn())
+            );
+        }
+    }
+    $ast = new RecordType($fields);
+}
                                     ;
 // Reglas lexicas (mayusculas)
 // Fragmentos

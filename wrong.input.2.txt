@@ -1,0 +1,10 @@
+let i, i:int; // Error: duplicated variable
+
+
+let a: int;
+let a: int;
+
+// Main program
+function main():void {
+	i = 0;
+}

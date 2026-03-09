@@ -1,19 +1,19 @@
 package ast.types;
 
+import ast.Locatable;
 import ast.Type;
+import errorhandler.ErrorHandler;
 
 public class ErrorType extends AbstractType {
-    private static ErrorType instance;
+    private String cause;
+    private Locatable locatable;
 
-    private ErrorType() {
+    public  ErrorType(String cause, Locatable locatable) {
+        this.cause = cause;
+        this.locatable = locatable;
+        ErrorHandler.getInstance().addError(this);
     }
 
-    public static ErrorType getInstance() {
-        if (instance == null) {
-            instance = new ErrorType();
-        }
-        return instance;
-    }
 
     @Override
     public boolean isEquivalentTo(Type type) {
@@ -23,5 +23,11 @@ public class ErrorType extends AbstractType {
     @Override
     public String toString() {
         return "error";
+    }
+    public String getCause(){
+        return cause;
+    }
+    public Locatable getLocatable(){
+        return locatable;
     }
 }

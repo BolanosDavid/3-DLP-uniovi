@@ -1,7 +1,4 @@
-package ast.program;
-
-import ast.ASTNode;
-import ast.Definition;
+package ast;
 
 import java.util.ArrayList;
 import java.util.List;
