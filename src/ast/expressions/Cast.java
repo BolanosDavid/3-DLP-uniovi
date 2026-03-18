@@ -2,6 +2,7 @@ package ast.expressions;
 
 import ast.Expression;
 import ast.Type;
+import visitor.Visitor;
 
 public class Cast extends AbstractExpression {
     private Expression expression;
@@ -26,5 +27,10 @@ public class Cast extends AbstractExpression {
     @Override
     public String toString() {
         return "(" + expression + " as " + castType + ")";
+    }
+
+    @Override
+    public <PT, RT> RT accept(Visitor<PT, RT> v, PT tp) {
+        return v.visit(this, tp);
     }
 }

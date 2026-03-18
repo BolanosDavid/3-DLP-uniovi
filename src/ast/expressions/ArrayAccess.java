@@ -1,6 +1,7 @@
 package ast.expressions;
 
 import ast.Expression;
+import visitor.Visitor;
 
 public class ArrayAccess extends AbstractExpression {
     private Expression array;
@@ -22,5 +23,10 @@ public class ArrayAccess extends AbstractExpression {
     @Override
     public String toString() {
         return array + "[" + index + "]";
+    }
+
+    @Override
+    public <PT, RT> RT accept(Visitor<PT, RT> v, PT tp) {
+        return v.visit(this, tp);
     }
 }

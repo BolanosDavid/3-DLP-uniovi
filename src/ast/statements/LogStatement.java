@@ -1,6 +1,7 @@
 package ast.statements;
 
 import ast.Expression;
+import visitor.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,5 +26,8 @@ public class LogStatement extends AbstractStatement {
 
         return "log " + exprStr + ";";
     }
-
+    @Override
+    public <PT, RT> RT accept(Visitor<PT, RT> v, PT tp) {
+        return v.visit(this, tp);
+    }
 }

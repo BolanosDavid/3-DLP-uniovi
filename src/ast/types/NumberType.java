@@ -1,6 +1,7 @@
 package ast.types;
 
 import ast.Type;
+import visitor.Visitor;
 
 public class NumberType extends AbstractType {
     private static NumberType instance;
@@ -23,5 +24,9 @@ public class NumberType extends AbstractType {
     @Override
     public String toString() {
         return "number";
+    }
+    @Override
+    public <PT, RT> RT accept(Visitor<PT, RT> v, PT tp) {
+        return v.visit(this, tp);
     }
 }

@@ -1,6 +1,7 @@
 package ast.types;
 
 import ast.Type;
+import visitor.Visitor;
 
 public class ArrayType extends AbstractType {
     private int size;
@@ -33,5 +34,9 @@ public class ArrayType extends AbstractType {
     @Override
     public String toString() {
         return "[" + size + "]" + elementType.toString();
+    }
+    @Override
+    public <PT, RT> RT accept(Visitor<PT, RT> v, PT tp) {
+        return v.visit(this, tp);
     }
 }

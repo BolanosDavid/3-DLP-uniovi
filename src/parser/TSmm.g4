@@ -191,7 +191,7 @@ record_type returns [RecordType ast] locals[List<RecordField> fields = new Array
         if(!recordFieldNames.add(r.getName())){
             ErrorType error = new ErrorType(
                 "Ya existe un record field con el nombre '" + r.getName() + "'",
-                new AbstractLocatable(r.getLine(), r.getColumn())
+                r.getLine(), r.getColumn()
             );
         }
     }

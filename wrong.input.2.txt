@@ -1,10 +1,8 @@
-let i, i:int; // Error: duplicated variable
+// Lvalue required
 
+function f(p:int):void{}
 
-let a: int;
-let a: int;
-
-// Main program
-function main():void {
-	i = 0;
+function main(): void{
+	let i:int;	
+	input f(i), 'c';
 }

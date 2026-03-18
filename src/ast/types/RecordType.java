@@ -1,6 +1,7 @@
 package ast.types;
 
 import ast.Type;
+import visitor.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,5 +71,10 @@ public class RecordType extends AbstractType {
         }
         sb.append(currentIndent).append("]");
         return sb.toString();
+    }
+
+    @Override
+    public <PT, RT> RT accept(Visitor<PT, RT> v, PT tp) {
+        return v.visit(this, tp);
     }
 }

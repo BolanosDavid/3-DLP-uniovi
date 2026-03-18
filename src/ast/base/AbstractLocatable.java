@@ -2,8 +2,9 @@ package ast.base;
 
 import ast.ASTNode;
 import ast.Locatable;
+import visitor.Visitor;
 
-public class AbstractLocatable implements ASTNode, Locatable {
+public abstract class AbstractLocatable implements Locatable {
     protected int line;
     protected int column;
 
@@ -21,4 +22,6 @@ public class AbstractLocatable implements ASTNode, Locatable {
     public int getColumn() {
         return column;
     }
+
+
 }

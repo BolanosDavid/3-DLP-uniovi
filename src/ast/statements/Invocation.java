@@ -1,6 +1,7 @@
 package ast.statements;
 
 import ast.Expression;
+import visitor.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.List;
 public class Invocation extends AbstractStatement implements Expression{
     private Expression function;
     private List<Expression> arguments = new ArrayList<>();
-
+    private boolean LValue;
     public Invocation(int line, int column, Expression function, List<Expression> arguments) {
         super(line, column);
         this.function = function;
@@ -31,5 +32,19 @@ public class Invocation extends AbstractStatement implements Expression{
                 .orElse("");
 
         return function + "(" + argsStr + ");";
+    }
+    @Override
+    public <PT, RT> RT accept(Visitor<PT, RT> v, PT tp) {
+        return v.visit(this, tp);
+    }
+
+    @Override
+    public boolean getLValue() {
+        return LValue;
+    }
+
+    @Override
+    public void setLValue(boolean lValue) {
+        this.LValue = lValue;
     }
 }

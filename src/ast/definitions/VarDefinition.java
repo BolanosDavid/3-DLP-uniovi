@@ -2,6 +2,7 @@ package ast.definitions;
 
 import ast.Statement;
 import ast.Type;
+import visitor.Visitor;
 
 public class VarDefinition extends AbstractDefinition implements Statement {
     
@@ -11,5 +12,10 @@ public class VarDefinition extends AbstractDefinition implements Statement {
     @Override
     public String toString() {
         return type + " " + name;
+    }
+
+    @Override
+    public <PT, RT> RT accept(Visitor<PT, RT> v, PT tp) {
+        return v.visit(this, tp);
     }
 }

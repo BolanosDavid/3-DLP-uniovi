@@ -4,6 +4,7 @@ import ast.Statement;
 import ast.Type;
 import ast.types.FunctionType;
 import ast.types.AbstractType;
+import visitor.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,5 +45,8 @@ public class FuncDefinition extends AbstractDefinition {
         return sb.toString();
     }
 
-
+    @Override
+    public <PT, RT> RT accept(Visitor<PT, RT> v, PT tp) {
+        return v.visit(this, tp);
+    }
 }
