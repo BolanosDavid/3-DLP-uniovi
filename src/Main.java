@@ -26,7 +26,7 @@ public class Main {
 		TSmmParser parser = new TSmmParser(tokens);
 		ASTNode ast = parser.program().ast;
 
-		ast.accept(new LValueVisitor<Void,Void>(),null);
+		ast.accept(new LValueVisitor(),null);
 
 		// * Check errors
 		if(ErrorHandler.getInstance().anyError()){
