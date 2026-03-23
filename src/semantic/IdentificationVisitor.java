@@ -1,0 +1,46 @@
+package semantic;
+
+import ast.Definition;
+import ast.definitions.FuncDefinition;
+import ast.definitions.VarDefinition;
+import ast.expressions.*;
+import ast.statements.*;
+import ast.types.*;
+import symboltable.SymbolTable;
+import visitor.AbstractVisitor;
+
+public class IdentificationVisitor extends AbstractVisitor<Void,Void> {
+    private final SymbolTable symbolTable = new SymbolTable();
+
+    @Override
+    public Void visit(FuncDefinition f, Void p) {
+        if(!symbolTable.insert(f)){
+            new ErrorType("Función con nombre "+ f.getName() + " no definida ",f.getLine(),f.getColumn());
+            return null;
+        }
+        symbolTable.set();
+        super.visit(f, p);
+        symbolTable.reset();
+        return null;
+    }
+
+    @Override
+    public Void visit(VarDefinition v, Void p) {
+        if(!symbolTable.insert(v)){
+            new ErrorType("Variable con nombre "+v.getName() +" ya definida previamente ",v.getLine(),v.getColumn());
+            return null;
+        }
+        v.getType().accept(this, p);
+        return null;
+    }
+    @Override
+    public Void visit(Variable v, Void p) {
+        Definition def = symbolTable.find(v.getName());
+        if( def == null){
+            new ErrorType("Variable con nombre "+v.getName() +" no definida ",v.getLine(),v.getColumn());
+        }
+        v.setDefinition(def);
+        return null;
+    }
+
+}

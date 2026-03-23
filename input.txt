@@ -1,15 +1,22 @@
-function f(e:int): number {
-  return e;
+// Global variables
+let i,n:int;
+let c:char;
+let record: [
+  let intField:int;
+ let realField:number;
+];
+// Functions
+function f(a:int, c:number):int {
+  let real:number;
+  real = c;
+  i = a;
+  return n;
 }
-
 // Main program
 function main(): void {
-  let i,a,j:int;
-  let v:[10]number;
-  
-  a = 0;
-  i = 0;
-  j = -i*a-2;  
-  v[(v[j] as int)] = a;
-  log 'f', '(', 'i', ')', '=' ,f(i);
+  let i:int;
+  let r:number;
+  log i, f(n,r),
+	record.intField, record.realField; // Not identification errors, will be detected during type checking
 }
+
