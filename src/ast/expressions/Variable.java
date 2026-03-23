@@ -4,7 +4,7 @@ import ast.Definition;
 import visitor.Visitor;
 
 public class Variable extends AbstractExpression {
-    private String name;
+    private final String name;
     private Definition definition;
     public Variable(int line, int column, String name) {
         super(line, column);

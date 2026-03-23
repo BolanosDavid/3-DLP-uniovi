@@ -11,7 +11,7 @@ public class SymbolTable {
 	 * 1 -> local
 	 */
 	private int scope=0;
-	private List<Map<String,Definition>> table;
+	private final List<Map<String,Definition>> table;
 	public SymbolTable()  {
 		table = new ArrayList<>();
 		table.add(new HashMap<>());
@@ -35,7 +35,7 @@ public class SymbolTable {
 
 	/**
 	 * Insertamos la definición
-	 * @param definition
+	 * @param definition: Definición a insertar
 	 * @return true si se inserto correctamente, false si ya existe
 	 */
 	public boolean insert(Definition definition) {
