@@ -29,6 +29,7 @@ public class Main {
 
 		ast.accept(new LValueVisitor(),null);
 		ast.accept(new IdentificationVisitor(),null);
+		ast.accept(new TypeCheckingVisitor(),null);
 
 		// * Check errors
 		if(ErrorHandler.getInstance().anyError()){

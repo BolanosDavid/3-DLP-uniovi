@@ -190,9 +190,7 @@ record_type returns [RecordType ast] locals[List<RecordField> fields = new Array
     for(RecordField r : $fields){
         if(!recordFieldNames.add(r.getName())){
             ErrorType error = new ErrorType(
-                "Ya existe un record field con el nombre '" + r.getName() + "'",
-                r.getLine(), r.getColumn()
-            );
+                "Ya existe un record field con el nombre '" + r.getName() + "'",r);
         }
     }
     $ast = new RecordType($fields);

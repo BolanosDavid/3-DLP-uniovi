@@ -1,22 +1,25 @@
 package ast.statements;
 
 import ast.Expression;
+import ast.Statement;
+import ast.expressions.AbstractExpression;
+import ast.expressions.Variable;
 import visitor.Visitor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Invocation extends AbstractStatement implements Expression{
-    private Expression function;
+public class Invocation extends AbstractExpression implements Statement {
+    private Variable function;
     private List<Expression> arguments = new ArrayList<>();
     private boolean LValue;
-    public Invocation(int line, int column, Expression function, List<Expression> arguments) {
+    public Invocation(int line, int column, Variable function, List<Expression> arguments) {
         super(line, column);
         this.function = function;
         this.arguments.addAll(arguments);
     }
 
-    public Expression getFunction() {
+    public Variable getFunction() {
         return function;
     }
 

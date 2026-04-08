@@ -1,0 +1,9 @@
+
+let v:[10]int;
+
+function main(): void {
+  let i:int;
+  i[0] = 0;		// Error 1 Operación no soportada: inttype no soporta la operación []
+  v[3] = 3.4;		// Error 2 Operación no soportada:
+  v[1][2] = 'a';	// Error 3 Operación no soportada: inttype no soporta la operación []
+}

@@ -16,10 +16,7 @@ public class VoidType extends AbstractType {
         return instance;
     }
 
-    @Override
-    public boolean isEquivalentTo(Type type) {
-        return type instanceof VoidType;
-    }
+
 
     @Override
     public String toString() {

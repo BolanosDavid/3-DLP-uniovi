@@ -1,0 +1,58 @@
+A:
+    { expr.type = Type }
+    { expr*.types = List<Type> }
+    { stmnt.returnType = Type }
+
+G:
+    (1)  IntLiteral:      expr -> INT_LITERAL
+    (2)  CharLiteral:     expr -> CHAR_LITERAL
+    (3)  NumberLiteral:   expr -> REAL_LITERAL
+    (4)  Arithmetic:      expr1 -> expr2 op expr3
+    (5)  UnaryMinus:      expr1 -> - expr2
+    (6)  UnaryNot:        expr1 -> ! expr2
+    (7)  Variable:        expr -> ID
+    (8)  Logic:           expr1 -> expr2 (&& | ||) expr3
+    (9)  Comparison:      expr1 -> expr2 comp expr3
+    (10) Cast:            expr1 -> castType expr2
+    (11) ArrayAccess:     expr1 -> expr2 [ expr3 ]
+    (12) FieldAccess:     expr1 -> expr2 . ID
+    (13) Invocation:      expr1 -> expr2 ( expr* )
+
+    (14) WhileStatement:  stmnt -> expr stmnt*
+    (15) IfStatement:     stmnt -> expr stmnt* stmnt*
+    (16) Assignment:      stmnt -> expr1 = expr2
+    (17) LogStatement:    stmnt -> expr*
+    (18) InputStatement:  stmnt -> expr*
+    (19) ReturnStatement: stmnt -> expr
+
+    (20) FunctionType:    type1 -> vardefinition* type2
+    (21) FuncDefinition:  definition -> ID type stmnt*
+
+R:
+    (1)  expr.type = IntType.getInstance()
+    (2)  expr.type = CharType.getInstance()
+    (3)  expr.type = NumberType.getInstance()
+
+    (4)  expr1.type = expr2.type.arithmetic(expr3.type, expr1)
+    (5)  expr1.type = expr2.type.unaryMinus(expr1)
+    (6)  expr1.type = expr2.type.unaryNot(expr1)
+    (7)  expr.type = expr.definition.type
+    (8)  expr1.type = expr2.type.logic(expr3.type, expr1)
+    (9)  expr1.type = expr2.type.comparison(expr3.type, expr1)
+    (10) expr1.type = expr2.type.canBeCastedTo(castType, expr1)
+    (11) expr1.type = expr2.type.squareBrackets(expr3.type, expr1)
+    (12) expr1.type = expr2.type.dot(ID.text, expr1)
+    (13) expr*.types = [tipo de cada argumento]
+         expr1.type = expr2.type.parenthesis(expr*.types, expr1)
+
+    (14) expr.type.mustBeLogical(stmnt)
+    (15) expr.type.mustBeLogical(stmnt)
+    (16) expr2.type.mustPromotesTo(expr1.type, stmnt)
+    (17) cada expr debe cumplir expr.type.mustBeBuiltIn(stmnt)
+    (18) cada expr debe cumplir expr.type.mustBeBuiltIn(stmnt)
+    (19) expr.type.mustPromotesTo(stmnt.returnType, stmnt)
+
+    (20) cada vardefinition debe cumplir vardefinition.type.mustBeBuiltIn(vardefinition)
+
+    (21) stmnt*.returnType = ((FunctionType) definition.type).getReturnType()
+         definition.type.mustBeBuiltIn(definition)

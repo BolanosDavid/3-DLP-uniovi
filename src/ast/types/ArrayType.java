@@ -1,5 +1,6 @@
 package ast.types;
 
+import ast.Locatable;
 import ast.Type;
 import visitor.Visitor;
 
@@ -16,24 +17,23 @@ public class ArrayType extends AbstractType {
         return size;
     }
 
-
     public Type getElementType() {
         return elementType;
     }
-
-
     @Override
-    public boolean isEquivalentTo(Type type) {
-        if (!(type instanceof ArrayType)) {
-            return false;
-        }
-        ArrayType other = (ArrayType) type;
-        return this.size == other.size && this.elementType.isEquivalentTo(other.elementType);
+    public Type squareBrackets(Type t, Locatable l) {
+        if (t instanceof ErrorType)
+            return t;
+
+        if (t == IntType.getInstance())
+            return elementType;
+
+        return super.squareBrackets(t, l);
     }
 
     @Override
     public String toString() {
-        return "[" + size + "]" + elementType.toString();
+        return "array";
     }
     @Override
     public <PT, RT> RT accept(Visitor<PT, RT> v, PT tp) {

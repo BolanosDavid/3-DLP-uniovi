@@ -98,6 +98,7 @@ public class LValueVisitor extends AbstractVisitor<Void, Void> {
     @Override
     public Void visit(Variable v, Void p) {
         super.visit(v, p);
+        v.setLValue(true);
         return null;
     }
 
@@ -105,7 +106,7 @@ public class LValueVisitor extends AbstractVisitor<Void, Void> {
     public Void visit(Assignment a, Void p){
         super.visit(a, p);
         if (!a.getLeft().getLValue()) {
-            new ErrorType( "Se esperaba un valor redireccionable en asignación ",a.getLine(), a.getColumn());
+            new ErrorType( "Se esperaba un valor redireccionable en asignación ",a);
         }
         return null;
     }
@@ -113,7 +114,7 @@ public class LValueVisitor extends AbstractVisitor<Void, Void> {
         super.visit(i, p);
         for(Expression e : i.getExpressions()){
             if (!e.getLValue()) {
-                new ErrorType("Se esperaba valor redireccionable en input",e.getLine(), e.getColumn());
+                new ErrorType("Se esperaba valor redireccionable en input",e);
             }
         }
         return null;

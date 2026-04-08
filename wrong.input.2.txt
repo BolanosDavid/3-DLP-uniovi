@@ -1,8 +1,10 @@
-// Lvalue required
+let date: [ 
+ let day:int;
+ let month:int;
+ let day:number;		// Error 1
+];
 
-function f(p:int):void{}
-
-function main(): void{
-	let i:int;	
-	input f(i), 'c';
+function main(): void {
+  input date.year;	// Error 2
 }
+

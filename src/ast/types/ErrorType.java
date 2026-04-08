@@ -6,22 +6,16 @@ import ast.base.AbstractLocatable;
 import errorhandler.ErrorHandler;
 import visitor.Visitor;
 
+import java.util.List;
+
 public class ErrorType extends AbstractType {
     private String cause;
-    private int linea;
-    private int columna;
+    private Locatable locatable;
 
-    public  ErrorType(String cause, int linea,int columna) {
+    public  ErrorType(String cause, Locatable locatable) {
         this.cause = cause;
-        this.linea = linea;
-        this.columna = columna;
+        this.locatable = locatable;
         ErrorHandler.getInstance().addError(this);
-    }
-
-
-    @Override
-    public boolean isEquivalentTo(Type type) {
-        return true;
     }
 
     @Override
@@ -31,14 +25,70 @@ public class ErrorType extends AbstractType {
     public String getCause(){
         return cause;
     }
-    public int getLinea(){
-        return linea;
-    }
-    public int getColumna(){
-        return columna;
-    }
+    public Locatable getLocatable(){return this.locatable;}
+
     @Override
     public <PT, RT> RT accept(Visitor<PT, RT> v, PT tp) {
         return v.visit(this, tp);
+    }
+
+    @Override
+    public Type arithmetic(Type t, Locatable l) {
+        return this;
+    }
+
+    @Override
+    public Type unaryMinus(Locatable l) {
+        return this;
+    }
+
+    @Override
+    public Type logic(Type t, Locatable l) {
+        return this;
+    }
+
+    @Override
+    public Type unaryNot(Locatable l) {
+        return this;
+    }
+
+    @Override
+    public Type canBeCastedTo(Type t, Locatable l) {
+        return this;
+    }
+
+    @Override
+    public Type comparison(Type t, Locatable l) {
+        return this;
+    }
+
+    @Override
+    public Type squareBrackets(Type t, Locatable l) {
+        return this;
+    }
+
+    @Override
+    public Type parenthesis(List<Type> types, Locatable l) {
+        return this;
+    }
+
+    @Override
+    public Type dot(String st, Locatable l) {
+        return this;
+    }
+
+    @Override
+    public void mustBeBuiltIn(Locatable l) {
+
+    }
+
+    @Override
+    public void mustPromotesTo(Type t, Locatable l) {
+
+    }
+
+    @Override
+    public void mustBeLogical(Locatable l) {
+
     }
 }

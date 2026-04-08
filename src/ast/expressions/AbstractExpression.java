@@ -11,11 +11,11 @@ public abstract class AbstractExpression extends AbstractLocatable implements Ex
     public AbstractExpression(int line, int column) {
         super(line, column);
     }
-
+    @Override
     public Type getType() {
         return type;
     }
-
+    @Override
     public void setType(Type type) {
         this.type = type;
     }

@@ -20,7 +20,7 @@ public class ErrorHandler {
     public void showErrors(PrintStream out){
         out.println("Se han encontrado " + errors.size() + " error(es):");
         for(ErrorType error : errors){
-            out.println(" - " + error.getCause() + " en la linea:"+error.getLinea() +" columna:" + error.getColumna());
+            out.println(" - " + error.getCause() + " en la linea:"+error.getLocatable().getLine() +" columna:" + error.getLocatable().getColumn());
         }
     }
     /** Añade un error*/

@@ -18,10 +18,12 @@ AbstractDefinition extends AbstractLocatable implements Definition {
     public String getName() {
         return name;
     }
-
+    @Override
     public Type getType() {
         return type;
     }
+    @Override
+    public void setType(Type type) {this.type = type;}
     @Override
     public int getScope(){
         return scope;

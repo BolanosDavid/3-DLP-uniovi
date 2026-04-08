@@ -1,5 +1,6 @@
 package ast.types;
 
+import ast.Locatable;
 import ast.Type;
 import ast.definitions.VarDefinition;
 import visitor.Visitor;
@@ -25,39 +26,32 @@ public class FunctionType extends AbstractType {
     }
 
     @Override
-    public boolean isEquivalentTo(Type type) {
-        if (!(type instanceof FunctionType)) {
-            return false;
-        }
-        FunctionType other = (FunctionType) type;
-        if (!this.returnType.isEquivalentTo(other.returnType)) {
-            return false;
-        }
-        if (this.parameters.size() != other.parameters.size()) {
-            return false;
-        }
-        for (int i = 0; i < parameters.size(); i++) {
-            if (!parameters.get(i).getType().isEquivalentTo(other.parameters.get(i).getType())) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder("(");
-        for (int i = 0; i < parameters.size(); i++) {
-            sb.append(parameters.get(i).getType());
-            if (i < parameters.size() - 1) {
-                sb.append(", ");
-            }
-        }
-        sb.append(") -> ").append(returnType);
-        return sb.toString();
+        return "function type";
     }
     @Override
     public <PT, RT> RT accept(Visitor<PT, RT> v, PT tp) {
         return v.visit(this, tp);
+    }
+    @Override
+    public Type parenthesis(List<Type> types, Locatable l) {
+        if (types.size() != parameters.size()) {
+            return super.parenthesis(types, l);
+        }
+
+        for (int i = 0; i < parameters.size(); i++) {
+            if (types.get(i) instanceof ErrorType) {
+                return types.get(i);
+            }
+            types.get(i).mustPromotesTo(parameters.get(i).getType(), l);
+        }
+        return returnType;
+    }
+
+    @Override
+    public void mustBeBuiltIn(Locatable l) {
+        if (returnType != VoidType.getInstance()) {
+            returnType.mustBeBuiltIn(l);
+        }
     }
 }

@@ -1,5 +1,6 @@
 package ast.types;
 
+import ast.Locatable;
 import ast.Type;
 import visitor.Visitor;
 
@@ -28,49 +29,17 @@ public class RecordType extends AbstractType {
     }
 
     @Override
-    public boolean isEquivalentTo(Type type) {
-        if (!(type instanceof RecordType)) {
-            return false;
+    public Type dot(String fieldName, Locatable location) {
+        RecordField field = getField(fieldName);
+        if (field != null) {
+            return field.getType();
         }
-        RecordType other = (RecordType) type;
-        if (this.fields.size() != other.fields.size()) {
-            return false;
-        }
-        for (int i = 0; i < fields.size(); i++) {
-            if (!fields.get(i).getName().equals(other.fields.get(i).getName()) ||
-                    !fields.get(i).getType().isEquivalentTo(other.fields.get(i).getType())) {
-                return false;
-            }
-        }
-        return true;
+        return super.dot(fieldName, location);
     }
 
     @Override
     public String toString() {
-        return toStringWithIndent("");
-    }
-
-    private String toStringWithIndent(String currentIndent) {
-        if (fields.isEmpty()) {
-            return "[]";
-        }
-
-        String nextIndent = currentIndent + "    ";
-
-        StringBuilder sb = new StringBuilder("[\n");
-        for (RecordField field : fields) {
-            sb.append(nextIndent).append("let ").append(field.getName()).append(": ");
-
-            if (field.getType() instanceof RecordType) {
-                sb.append(((RecordType) field.getType()).toStringWithIndent(nextIndent));
-            } else {
-                sb.append(field.getType());
-            }
-
-            sb.append(";\n");
-        }
-        sb.append(currentIndent).append("]");
-        return sb.toString();
+        return "record";
     }
 
     @Override
