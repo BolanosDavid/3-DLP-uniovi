@@ -32,7 +32,6 @@ R:
     (1)  expr.type = IntType.getInstance()
     (2)  expr.type = CharType.getInstance()
     (3)  expr.type = NumberType.getInstance()
-
     (4)  expr1.type = expr2.type.arithmetic(expr3.type, expr1)
     (5)  expr1.type = expr2.type.unaryMinus(expr1)
     (6)  expr1.type = expr2.type.unaryNot(expr1)
@@ -42,17 +41,31 @@ R:
     (10) expr1.type = expr2.type.canBeCastedTo(castType, expr1)
     (11) expr1.type = expr2.type.squareBrackets(expr3.type, expr1)
     (12) expr1.type = expr2.type.dot(ID.text, expr1)
-    (13) expr*.types = [tipo de cada argumento]
-         expr1.type = expr2.type.parenthesis(expr*.types, expr1)
-
+    (13)
+         expr*.types = new ArrayList<Type>();
+         for (Expr e : expr*) {
+             expr*.types.add(e.type);
+         }
+         expr1.type = expr2.type.parenthesis(expr*.types, expr1);
     (14) expr.type.mustBeLogical(stmnt)
     (15) expr.type.mustBeLogical(stmnt)
     (16) expr2.type.mustPromotesTo(expr1.type, stmnt)
-    (17) cada expr debe cumplir expr.type.mustBeBuiltIn(stmnt)
-    (18) cada expr debe cumplir expr.type.mustBeBuiltIn(stmnt)
+    (17)
+         for (Expr e : expr*) {
+             e.type.mustBeBuiltIn(stmnt);
+         }
+    (18)
+         for (Expr e : expr*) {
+             e.type.mustBeBuiltIn(stmnt);
+         }
+
     (19) expr.type.mustPromotesTo(stmnt.returnType, stmnt)
-
-    (20) cada vardefinition debe cumplir vardefinition.type.mustBeBuiltIn(vardefinition)
-
-    (21) stmnt*.returnType = ((FunctionType) definition.type).getReturnType()
-         definition.type.mustBeBuiltIn(definition)
+    (20)
+         for (VarDefinition v : vardefinition*) {
+             v.type.mustBeBuiltIn(type2);
+         }
+    (21)
+         for (Statement s : stmnt*) {
+             s.returnType = definition.type.getReturnType();
+         }
+         definition.type.mustBeBuiltIn(definition);
