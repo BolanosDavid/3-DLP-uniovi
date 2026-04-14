@@ -38,7 +38,7 @@ public class Main {
 			ErrorHandler.getInstance().showErrors(System.err);
 		}
 		else{
-			ast.accept(new OffsetVisitor(),null);
+			ast.accept(new OffsetVisitor(),false);
 			// * The AST is shown
 			IntrospectorModel model=new IntrospectorModel("Program", ast);
 			new IntrospectorView("Introspector", model);
