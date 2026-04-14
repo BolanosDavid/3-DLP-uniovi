@@ -15,6 +15,7 @@ import java.util.StringJoiner;
  * y se generará un {@code ErrorType} descriptivo.</p>
  */
 public abstract class AbstractType implements Type {
+    public abstract int numberOfBytes();
 
     /**
      * Devuelve la representación textual del tipo.

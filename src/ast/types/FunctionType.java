@@ -54,4 +54,8 @@ public class FunctionType extends AbstractType {
             returnType.mustBeBuiltIn(l);
         }
     }
+    @Override
+    public int numberOfBytes(){
+        throw new UnsupportedOperationException("ERROR - Invariante violada: Var definition no puede ser de tipo FunctionType");
+    }
 }

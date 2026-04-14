@@ -1,1 +1,5 @@
-Traverse the AST with the visitor design pattern, annotating the lvalue attribute for expressions. The compiler must accept input.txt and prompt the appropriate error messages for input.wrong.1.txt and input.wrong.2.txt.
+Annotate the AST with the offsets of:
+- Global variables
+- Local variables
+- (Formal) parameters
+- Record fields

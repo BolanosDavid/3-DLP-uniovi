@@ -39,4 +39,9 @@ public class ArrayType extends AbstractType {
     public <PT, RT> RT accept(Visitor<PT, RT> v, PT tp) {
         return v.visit(this, tp);
     }
+
+    @Override
+    public int numberOfBytes(){
+        return elementType.numberOfBytes() * size;
+    }
 }

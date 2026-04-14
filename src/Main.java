@@ -7,6 +7,7 @@ import parser.TSmmLexer;
 import parser.TSmmParser;
 import semantic.IdentificationVisitor;
 import semantic.LValueVisitor;
+import codegeneration.OffsetVisitor;
 import semantic.TypeCheckingVisitor;
 
 
@@ -37,9 +38,11 @@ public class Main {
 			ErrorHandler.getInstance().showErrors(System.err);
 		}
 		else{
+			ast.accept(new OffsetVisitor(),null);
 			// * The AST is shown
 			IntrospectorModel model=new IntrospectorModel("Program", ast);
 			new IntrospectorView("Introspector", model);
+
 		}
 	}
 }

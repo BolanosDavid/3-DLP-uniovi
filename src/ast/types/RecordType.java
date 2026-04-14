@@ -46,4 +46,8 @@ public class RecordType extends AbstractType {
     public <PT, RT> RT accept(Visitor<PT, RT> v, PT tp) {
         return v.visit(this, tp);
     }
+    @Override
+    public int numberOfBytes(){
+        return fields.stream().mapToInt(field -> field.getType().numberOfBytes()).sum();
+    }
 }

@@ -5,6 +5,7 @@ import ast.base.AbstractLocatable;
 import visitor.Visitor;
 
 public class RecordField extends AbstractLocatable {
+    private int offset;
     private String name;
     private Type type;
 
@@ -29,5 +30,12 @@ public class RecordField extends AbstractLocatable {
     @Override
     public <PT, RT> RT accept(Visitor<PT, RT> v, PT tp) {
         return v.visit(this, tp);
+    }
+
+    public void setOffset(int bytes) {
+        this.offset = bytes;
+    }
+    public int getOffset() {
+        return offset;
     }
 }

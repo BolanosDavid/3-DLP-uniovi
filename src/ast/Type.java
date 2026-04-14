@@ -3,7 +3,11 @@ package ast;
 import java.util.List;
 
 public interface Type extends ASTNode{
-
+    /**
+     * Devuelve el numero de bytes de un tipo
+     * @return
+     */
+    int numberOfBytes();
     /**
      * Comprueba que este tipo pueda usarse en un contexto lógico.
      *
