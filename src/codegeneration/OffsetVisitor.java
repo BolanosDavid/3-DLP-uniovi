@@ -88,6 +88,7 @@ public class OffsetVisitor extends AbstractVisitor<Boolean, Void> {
     public Void visit(FuncDefinition f, Boolean inFunction) {
         localBytesSum = 0; // nuevo frame, nuevo acumulador local
         super.visit(f, true); // propaga true a FunctionType y a todos los statements
+        f.setByteLocalSum(localBytesSum); // decora FuncDefinition para poder usarlo en generación de código
         return null;
     }
 
