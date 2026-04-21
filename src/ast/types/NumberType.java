@@ -78,4 +78,7 @@ public class NumberType extends AbstractType {
     public int numberOfBytes(){
         return 4;
     }
+    public char suffix(){
+        return 'f';
+    }
 }

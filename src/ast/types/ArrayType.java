@@ -31,6 +31,7 @@ public class ArrayType extends AbstractType {
         return super.squareBrackets(t, l);
     }
 
+
     @Override
     public String toString() {
         return "array";

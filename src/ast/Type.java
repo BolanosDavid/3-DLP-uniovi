@@ -110,5 +110,11 @@ public interface Type extends ASTNode{
      */
     Type canBeCastedTo(Type t, Locatable l);
 
+    /**
+     * Devuelve el sufijo de un tipo
+     * @return sufijo de un tipo
+     */
+    char suffix();
+
 
 }

@@ -11,6 +11,7 @@ import java.util.List;
 
 public class FuncDefinition extends AbstractDefinition {
     private List<Statement> statements = new ArrayList<>();
+    private int byteLocalSum;
 
     public FuncDefinition(int line, int column, String name, Type retType, List<VarDefinition> parameters, List<Statement> statements) {
         super(line, column, name, new FunctionType(parameters, retType));
@@ -44,7 +45,12 @@ public class FuncDefinition extends AbstractDefinition {
 
         return sb.toString();
     }
-
+    public int getByteLocalSum() {
+        return byteLocalSum;
+    }
+    public void setByteLocalSum(int byteLocalSum) {
+        this.byteLocalSum = byteLocalSum;
+    }
     @Override
     public <PT, RT> RT accept(Visitor<PT, RT> v, PT tp) {
         return v.visit(this, tp);

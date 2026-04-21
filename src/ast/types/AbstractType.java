@@ -214,4 +214,9 @@ public abstract class AbstractType implements Type {
 
         return new ErrorType("No se puede convertir el tipo '" + this + "' a '" + t + "'.", l);
     }
+
+    @Override
+    public char suffix() {
+        return '\0';    // Por defecto devuelvo el carácter nulo
+    }
 }

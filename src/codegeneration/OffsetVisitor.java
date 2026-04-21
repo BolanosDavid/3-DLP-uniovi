@@ -1,5 +1,6 @@
 package codegeneration;
 
+import ast.Program;
 import ast.definitions.FuncDefinition;
 import ast.definitions.VarDefinition;
 import ast.types.FunctionType;
@@ -30,6 +31,12 @@ public class OffsetVisitor extends AbstractVisitor<Boolean, Void> {
 
     // Acumulador de bytes para variables locales (se resetea en cada función)
     private int localBytesSum = 0;
+
+    @Override
+    public Void visit(Program p, Boolean inFunction) {
+        p.getDefinitions().forEach(d -> d.accept(this, false));
+        return null;
+    }
 
     /**
      * VARIABLES GLOBALES Y LOCALES
