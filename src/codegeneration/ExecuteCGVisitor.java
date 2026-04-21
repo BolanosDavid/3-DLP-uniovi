@@ -11,8 +11,6 @@ import ast.statements.LogStatement;
 import ast.statements.WhileStatement;
 import ast.types.FunctionType;
 import ast.types.VoidType;
-import ast.definitions.VarDefinition;
-import com.esotericsoftware.kryo.io.Input;
 
 public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
     private final ValueCGVisitor valueCGVisitor;
@@ -75,27 +73,32 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
      */
     @Override
     public Void visit(FuncDefinition f, Void o) {
+        getCodeGenerator().commentLine(f.getLine());
         getCodeGenerator().printFunction(f.getName());
 
         // Comentarios de parámetros
         FunctionType funcType = (FunctionType) f.getType();
+        getCodeGenerator().comment("Parameters");
         funcType.getParameters().forEach(param ->
-                getCodeGenerator().comment("Parameter " + param.getType() + " " + param.getName()
+                getCodeGenerator().comment(param.getType() + " " + param.getName()
                         + " (offset " + param.getOffset() + ")")
         );
 
-        // Comentarios de variables locales (VarDefinition dentro de statements)
-        f.getStatements().stream()
-                .filter(s -> s instanceof VarDefinition)
-                .map(s -> (VarDefinition) s)
-                .forEach(v ->
-                        getCodeGenerator().comment("Local " + v.getType() + " " + v.getName()
-                                + " (offset " + v.getOffset() + ")")
-                );
+        getCodeGenerator().comment("Local variables");
+        f.getStatements().forEach(s -> {
+            if (s instanceof VarDefinition v) {
+                getCodeGenerator().comment(v.getType() + " " + v.getName()
+                        + " (offset " + v.getOffset() + ")");
+            }
+        });
 
         getCodeGenerator().enter(f.getByteLocalSum());
 
-        f.getStatements().forEach(s -> s.accept(this, o));
+        f.getStatements().forEach(s -> {
+            if (!(s instanceof VarDefinition)) {
+                s.accept(this, o);
+            }
+        });
 
         // ret provisional para funciones void
         if (funcType.getReturnType() instanceof VoidType) {
@@ -145,9 +148,9 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
      */
     @Override
     public Void visit(LogStatement l, Void o) {
-        getCodeGenerator().commentLine(l.getLine());
-        getCodeGenerator().comment("Write");
         l.getExpressions().forEach(e -> {
+            getCodeGenerator().commentLine(l.getLine());
+            getCodeGenerator().comment("Write");
             e.accept(valueCGVisitor, null);
             getCodeGenerator().out(e.getType());
         });
@@ -162,7 +165,14 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
      *  }
      */
     @Override
-    public Void visit(InputStatement i, Void p) {
+    public Void visit(InputStatement i, Void o) {
+        getCodeGenerator().commentLine(i.getLine());
+        i.getExpressions().forEach(e -> {
+            getCodeGenerator().comment("Read");
+            e.accept(addressCGVisitor, null);
+            getCodeGenerator().input(e.getType());
+            getCodeGenerator().store(e.getType());
+        });
         return null;
     }
 }
