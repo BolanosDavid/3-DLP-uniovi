@@ -1,0 +1,10 @@
+[27/04/2026 14:48:57] (RunUserAction) System.ObjectDisposedException: No se puede obtener acceso al objeto desechado.
+Nombre del objeto: 'ESView'.
+   en System.Windows.Forms.Control.CreateHandle()
+   en System.Windows.Forms.TextBoxBase.CreateHandle()
+   en System.Windows.Forms.TextBoxBase.SetSelectedTextInternal(String text, Boolean clearUndo)
+   en System.Windows.Forms.TextBoxBase.AppendText(String text)
+   en GVM.Views.ViewESManager.ReadInt()
+   en GVM.Instructions.InStateChanges.DoChange(State state)
+   en GVM.StateModule.VirtualMachine.Run()
+   en GVM.Actions.TraceExceptionsThread.TryCode(ThreadStart code)

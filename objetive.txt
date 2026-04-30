@@ -1,11 +1,6 @@
-Generate MAPL code for:
-- Programs
-- Input statements
-- Print statements
-- Literals
-- Variables
-- Assignments
-- Arithmetic, comparison and logical expressions
-- VarDefinitions (global / local)
-- FunDefinitions
-- Casts
+Generate code for:
+- Function invocations
+- Return statements
+
+CFG-chat:
+https://forms.office.com/e/8f5i4wPrkP

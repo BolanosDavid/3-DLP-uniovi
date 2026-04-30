@@ -1,0 +1,123 @@
+let temperatures: [7]number;
+let forecast: [7][4]number;
+
+// Weather station test program
+function main(): void {
+	let i, j: int;
+	let base, sum, average, max, min: number;
+
+	let date: [
+		let day, month, year: int;
+	];
+
+	let station: [
+		let id: int;
+		let code: int;
+		let correction: number;
+	];
+
+	log 'W','E','A','T','H','E','R',' ','S','T','A','T','I','O','N','\n';
+	log 'D','a','y',':',' ';
+	input date.day;
+
+	log 'M','o','n','t','h',':',' ';
+	input date.month;
+
+	log 'Y','e','a','r',':',' ';
+	input date.year;
+
+	log 'B','a','s','e',' ','t','e','m','p',':',' ';
+	input base;
+
+	station.id = 1;
+	station.code = date.day * 100 + date.month;
+	station.correction = (station.code % 5) as number;
+
+	log '\n';
+	log 'D','a','t','e',':',' ', date.day, '/', date.month, '/', date.year, '\n';
+	log 'S','t','a','t','i','o','n',' ', station.id, '\n';
+	log 'C','o','d','e',':',' ', station.code, '\n';
+	log 'C','o','r','r','e','c','t','i','o','n',':',' ', station.correction, '\n';
+	log '\n';
+
+	i = 0;
+	sum = 0;
+
+	while (i < 7) {
+		temperatures[i] = base + (i as number) * 1.5 - station.correction;
+
+		if (i % 2)
+			temperatures[i] = temperatures[i] + 0.75;
+		else
+			temperatures[i] = temperatures[i] - 0.25;
+
+		sum = sum + temperatures[i];
+
+		log 'D','a','y',' ', i + 1, ':', ' ', temperatures[i], ' ';
+
+		if (temperatures[i] < 10)
+			log 'C','O','L','D','\n';
+		else {
+			if (temperatures[i] < 25)
+				log 'O','K','\n';
+			else
+				log 'H','O','T','\n';
+		}
+
+		i = i + 1;
+	}
+
+	average = sum / 7;
+	max = temperatures[0];
+	min = temperatures[0];
+
+	i = 1;
+	while (i < 7) {
+		if (temperatures[i] > max)
+			max = temperatures[i];
+		else
+			max = max;
+
+		if (temperatures[i] < min)
+			min = temperatures[i];
+		else
+			min = min;
+
+		i = i + 1;
+	}
+
+	log '\n';
+	log 'A','v','e','r','a','g','e',':',' ', average, '\n';
+	log 'M','a','x',':',' ', max, '\n';
+	log 'M','i','n',':',' ', min, '\n';
+	log '\n';
+
+	log 'F','o','r','e','c','a','s','t',' ','m','a','t','r','i','x',':','\n';
+
+	i = 0;
+	while (i < 7) {
+		j = 0;
+		while (j < 4) {
+			forecast[i][j] = temperatures[i] + (j as number) * 0.5;
+			log forecast[i][j], ' ';
+			j = j + 1;
+		}
+		log '\n';
+		i = i + 1;
+	}
+
+	log '\n';
+	log 'D','a','y','s',' ','a','b','o','v','e',' ','a','v','g',':',' ';
+
+	i = 0;
+	while (i < 7) {
+		if (temperatures[i] > average)
+			log i + 1, ' ';
+		else
+			log '';
+
+		i = i + 1;
+	}
+
+	log '\n';
+}

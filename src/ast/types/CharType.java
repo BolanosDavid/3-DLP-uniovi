@@ -45,6 +45,8 @@ public class CharType extends AbstractType {
 
     @Override
     public void mustPromotesTo(Type t, Locatable l) {
+        if(t == IntType.getInstance() || t == NumberType.getInstance())
+            return ;
         if(this == t)
             return;
         super.mustPromotesTo(t, l);

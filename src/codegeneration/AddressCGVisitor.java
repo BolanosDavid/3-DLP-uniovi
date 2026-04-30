@@ -40,6 +40,7 @@ public class AddressCGVisitor extends AbstractCGVisitor<Void, Void> {
      * address[[ArrayAcces: expression1 -> expression2 expression3 ]]()=
      *      address[[expression1]]()
      *      value[[expression3]]()
+     *      cg.convertTo(expression3.type, IntType)
      *      <pushi> expression1.type.numberOfBytes()
      *      <muli>
      *      <addi>
@@ -48,7 +49,8 @@ public class AddressCGVisitor extends AbstractCGVisitor<Void, Void> {
     public Void visit(ArrayAccess a, Void p) {
         a.getArray().accept(this, p);
         a.getIndex().accept(valueCGVisitor, p);
-        getCodeGenerator().push(a.getArray().getType().numberOfBytes());
+        getCodeGenerator().convertTo(a.getIndex().getType(), IntType.getInstance());
+        getCodeGenerator().push(a.getType().numberOfBytes());
         getCodeGenerator().mul(IntType.getInstance());
         getCodeGenerator().add(IntType.getInstance());
 
@@ -69,5 +71,6 @@ public class AddressCGVisitor extends AbstractCGVisitor<Void, Void> {
         getCodeGenerator().add(IntType.getInstance());
         return null;
     }
+
 
 }

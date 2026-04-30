@@ -1,28 +1,300 @@
-let c: char;
-let i: int;
-let r: number;
+let mines: [6][6]int;
+let numbers: [6][6]int;
+let revealed: [6][6]int;
 
-function main(): void{
-	let a, i:int;
-	
-	c = 'a';
-	log c,'\n';
+// Mini Minesweeper compiler test
+function main(): void {
+	let i, j: int;
+	let seed, k, placed: int;
+	let row, col: int;
+	let turn, alive, score, valid: int;
+	let ni, nj: int;
 
-	a = (1.5 as int);
-	i = '0' * 3;
-	log a, ' ', i, '\n';
-		
-	input r;
-	log 2 * r, '\n';
-	
-	log 3 - 4.5, ' ', 
-            '0' / 48.0, ' ',
-            '0' % '1', ' ',
-            0 + '1', '\n';
-	log 1 < 2, ' ',
-	      4 >= 3, ' ',
-	      5 == 5, ' ',
-	      1 && 2, ' ',
-	      0 || 3, ' ',
-	      !0, '\n';
+	log 'M','I','N','E','S','W','E','E','P','E','R','\n';
+	log 'S','e','e','d',':',' ';
+	input seed;
+
+	i = 0;
+	while (i < 6) {
+		j = 0;
+		while (j < 6) {
+			mines[i][j] = 0;
+			numbers[i][j] = 0;
+			revealed[i][j] = 0;
+			j = j + 1;
+		}
+		i = i + 1;
+	}
+
+	placed = 0;
+	k = 0;
+
+	while (placed < 6) {
+		row = (seed + k * 3 + 1) % 6;
+		col = (seed * 2 + k * 5 + 2) % 6;
+
+		if (mines[row][col] == 0) {
+			mines[row][col] = 1;
+			placed = placed + 1;
+		}
+
+		k = k + 1;
+	}
+
+	i = 0;
+	while (i < 6) {
+		j = 0;
+		while (j < 6) {
+			if (mines[i][j] == 1)
+				numbers[i][j] = 9;
+			else {
+				numbers[i][j] = 0;
+
+				if (i > 0) {
+					numbers[i][j] = numbers[i][j] + mines[i - 1][j];
+
+					if (j > 0)
+						numbers[i][j] = numbers[i][j] + mines[i - 1][j - 1];
+
+					if (j < 5)
+						numbers[i][j] = numbers[i][j] + mines[i - 1][j + 1];
+				}
+
+				if (j > 0)
+					numbers[i][j] = numbers[i][j] + mines[i][j - 1];
+
+				if (j < 5)
+					numbers[i][j] = numbers[i][j] + mines[i][j + 1];
+
+				if (i < 5) {
+					numbers[i][j] = numbers[i][j] + mines[i + 1][j];
+
+					if (j > 0)
+						numbers[i][j] = numbers[i][j] + mines[i + 1][j - 1];
+
+					if (j < 5)
+						numbers[i][j] = numbers[i][j] + mines[i + 1][j + 1];
+				}
+			}
+
+			j = j + 1;
+		}
+		i = i + 1;
+	}
+
+	log '\n';
+	log 'B','o','a','r','d',':','\n';
+	log ' ',' ','0',' ','1',' ','2',' ','3',' ','4',' ','5','\n';
+
+	i = 0;
+	while (i < 6) {
+		log i,':',' ';
+		j = 0;
+		while (j < 6) {
+			log '.',' ';
+			j = j + 1;
+		}
+		log '\n';
+		i = i + 1;
+	}
+
+	turn = 0;
+	alive = 1;
+	score = 0;
+
+	while (turn < 3 && alive == 1) {
+		log '\n';
+		log 'T','u','r','n',' ', turn + 1, '\n';
+
+		log 'R','o','w',':',' ';
+		input row;
+
+		log 'C','o','l',':',' ';
+		input col;
+
+		valid = 1;
+
+		if (row < 0)
+			valid = 0;
+
+		if (row >= 6)
+			valid = 0;
+
+		if (col < 0)
+			valid = 0;
+
+		if (col >= 6)
+			valid = 0;
+
+		if (valid == 0)
+			log 'I','N','V','A','L','I','D','\n';
+		else {
+			if (mines[row][col] == 1) {
+				alive = 0;
+				revealed[row][col] = 1;
+				log 'B','O','O','M','!','\n';
+			}
+			else {
+				if (revealed[row][col] == 1)
+					log 'R','E','P','E','A','T','E','D','\n';
+				else {
+					revealed[row][col] = 1;
+					score = score + 1;
+
+					if (numbers[row][col] == 0) {
+						if (row > 0) {
+							ni = row - 1;
+							nj = col;
+
+							if (mines[ni][nj] == 0) {
+								if (revealed[ni][nj] == 0) {
+									revealed[ni][nj] = 1;
+									score = score + 1;
+								}
+							}
+
+							if (col > 0) {
+								ni = row - 1;
+								nj = col - 1;
+
+								if (mines[ni][nj] == 0) {
+									if (revealed[ni][nj] == 0) {
+										revealed[ni][nj] = 1;
+										score = score + 1;
+									}
+								}
+							}
+
+							if (col < 5) {
+								ni = row - 1;
+								nj = col + 1;
+
+								if (mines[ni][nj] == 0) {
+									if (revealed[ni][nj] == 0) {
+										revealed[ni][nj] = 1;
+										score = score + 1;
+									}
+								}
+							}
+						}
+
+						if (col > 0) {
+							ni = row;
+							nj = col - 1;
+
+							if (mines[ni][nj] == 0) {
+								if (revealed[ni][nj] == 0) {
+									revealed[ni][nj] = 1;
+									score = score + 1;
+								}
+							}
+						}
+
+						if (col < 5) {
+							ni = row;
+							nj = col + 1;
+
+							if (mines[ni][nj] == 0) {
+								if (revealed[ni][nj] == 0) {
+									revealed[ni][nj] = 1;
+									score = score + 1;
+								}
+							}
+						}
+
+						if (row < 5) {
+							ni = row + 1;
+							nj = col;
+
+							if (mines[ni][nj] == 0) {
+								if (revealed[ni][nj] == 0) {
+									revealed[ni][nj] = 1;
+									score = score + 1;
+								}
+							}
+
+							if (col > 0) {
+								ni = row + 1;
+								nj = col - 1;
+
+								if (mines[ni][nj] == 0) {
+									if (revealed[ni][nj] == 0) {
+										revealed[ni][nj] = 1;
+										score = score + 1;
+									}
+								}
+							}
+
+							if (col < 5) {
+								ni = row + 1;
+								nj = col + 1;
+
+								if (mines[ni][nj] == 0) {
+									if (revealed[ni][nj] == 0) {
+										revealed[ni][nj] = 1;
+										score = score + 1;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		log '\n';
+		log 'B','o','a','r','d',':','\n';
+		log ' ',' ','0',' ','1',' ','2',' ','3',' ','4',' ','5','\n';
+
+		i = 0;
+		while (i < 6) {
+			log i,':',' ';
+			j = 0;
+			while (j < 6) {
+				if (revealed[i][j] == 1) {
+					if (mines[i][j] == 1)
+						log '*',' ';
+					else
+						log numbers[i][j], ' ';
+				}
+				else
+					log '.',' ';
+
+				j = j + 1;
+			}
+			log '\n';
+			i = i + 1;
+		}
+
+		turn = turn + 1;
+	}
+
+	log '\n';
+
+	if (alive == 1)
+		log 'F','I','N','I','S','H','E','D','\n';
+	else
+		log 'G','A','M','E',' ','O','V','E','R','\n';
+
+	log 'S','c','o','r','e',':',' ', score, '\n';
+
+	log '\n';
+	log 'S','o','l','u','t','i','o','n',':','\n';
+	log ' ',' ','0',' ','1',' ','2',' ','3',' ','4',' ','5','\n';
+
+	i = 0;
+	while (i < 6) {
+		log i,':',' ';
+		j = 0;
+		while (j < 6) {
+			if (mines[i][j] == 1)
+				log '*',' ';
+			else
+				log numbers[i][j], ' ';
+
+			j = j + 1;
+		}
+		log '\n';
+		i = i + 1;
+	}
 }

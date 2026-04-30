@@ -5,11 +5,9 @@ import ast.Expression;
 import ast.Program;
 import ast.definitions.FuncDefinition;
 import ast.definitions.VarDefinition;
-import ast.statements.Assignment;
-import ast.statements.InputStatement;
-import ast.statements.LogStatement;
-import ast.statements.WhileStatement;
+import ast.statements.*;
 import ast.types.FunctionType;
+import ast.types.IntType;
 import ast.types.VoidType;
 
 public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
@@ -127,15 +125,59 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
         return null;
     }
     /**
-     *  execute[[WhileStatement: statement1 -> expression statement2*]]():
-     *
-     *     forEach(Statement statement: statement2*){
-     *          execute[[statement]]()
-     *     }
-     *
-     *
+     * execute[[IfStatement: statement1 -> expression statement2* statement3*]]():
+     *  int else = cg.getLabel()
+     *  int end = cg.getLabel()
+     *  value[[expression]]()
+     *  cg.convertTo(expression.type, IntType)
+     *  <jz else>
+     *  for(s in statement2*)
+     *      execute[[s]]()
+     *  <jmp end>
+     *  <label> else <:>
+     *  for(s in statement3*)
+     *       execute[[s]]()
+     *  <label> end <:>
      */
-    public Void visit(WhileStatement w , Void p){
+    @Override
+    public Void visit(IfStatement s, Void p){
+        int elseLabel = getCodeGenerator().getLabel();
+        int endLabel = getCodeGenerator().getLabel();
+        s.getCondition().accept(valueCGVisitor, null);
+        getCodeGenerator().convertTo(s.getCondition().getType(), IntType.getInstance());
+        getCodeGenerator().jz(elseLabel);
+        s.getThenBody().forEach(s1 -> s1.accept(this, p));
+        getCodeGenerator().jmp(endLabel);
+        getCodeGenerator().label(elseLabel);
+        s.getElseBody().forEach(s1 -> s1.accept(this, p));
+        getCodeGenerator().label(endLabel);
+        return null;
+    }
+
+    /**
+     * execute[[WhileStatement: statement -> expression statement*]]():
+     *      condition = cg.getLabel()
+     * 	    end = cg.getLabel()
+     * 	    <label> condition <:>
+     * 	    value[[expression]]()
+     * 	    cg.convertTo(expression.type, IntType)
+     * 	    <jz label> end
+     * 	    for(s in statement2*)
+     * 		    execute[[s]]()
+     * 	    <jmp label> condition
+     * 	    <label> end <:>
+     */
+    @Override
+    public Void visit(WhileStatement w, Void p){
+        int condition = getCodeGenerator().getLabel();
+        int end = getCodeGenerator().getLabel();
+        getCodeGenerator().label(condition);
+        w.getCondition().accept(valueCGVisitor, null);
+        getCodeGenerator().convertTo(w.getCondition().getType(), IntType.getInstance());
+        getCodeGenerator().jz(end);
+        w.getBody().forEach(s -> s.accept(this, p));
+        getCodeGenerator().jmp(condition);
+        getCodeGenerator().label(end);
         return null;
     }
 
