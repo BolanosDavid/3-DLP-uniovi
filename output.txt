@@ -1,231 +1,287 @@
 
 #source	"input.txt"
 
-	' * array mines (offset 0)
-	' * array numbers (offset 72)
-	' * array revealed (offset 144)
+	' * record pair (offset 0)
+	' * array acme (offset 3)
+	' * array fibonacci (offset 11)
 
 ' Invocation to the main function
 call main
 halt
 
-#line	6
+#line	14
 
- main:
+ p:
 	' * Parameters
 	' * Local variables
-	' * int i (offset -2)
-	' * int j (offset -4)
-	' * int seed (offset -6)
-	' * int k (offset -8)
-	' * int placed (offset -10)
-	' * int row (offset -12)
-	' * int col (offset -14)
-	' * int turn (offset -16)
-	' * int alive (offset -18)
-	' * int score (offset -20)
-	' * int valid (offset -22)
-	' * int ni (offset -24)
-	' * int nj (offset -26)
-	enter	26
+	enter	0
+	ret	0, 0, 0
 
-#line	13
-	' * Write
-	pushb	77
-	outb
+#line	16
 
-#line	13
-	' * Write
-	pushb	73
-	outb
+ f:
+	' * Parameters
+	' * number r (offset 6)
+	' * int e (offset 4)
+	' * Local variables
+	' * number real (offset -4)
+	' * char c (offset -5)
+	' * int result (offset -7)
+	enter	7
 
-#line	13
-	' * Write
-	pushb	78
-	outb
-
-#line	13
-	' * Write
-	pushb	69
-	outb
-
-#line	13
-	' * Write
-	pushb	83
-	outb
-
-#line	13
-	' * Write
-	pushb	87
-	outb
-
-#line	13
-	' * Write
-	pushb	69
-	outb
-
-#line	13
-	' * Write
-	pushb	69
-	outb
-
-#line	13
-	' * Write
-	pushb	80
-	outb
-
-#line	13
-	' * Write
-	pushb	69
-	outb
-
-#line	13
-	' * Write
-	pushb	82
-	outb
-
-#line	13
-	' * Write
-	pushb	10
-	outb
-
-#line	14
-	' * Write
-	pushb	83
-	outb
-
-#line	14
-	' * Write
-	pushb	101
-	outb
-
-#line	14
-	' * Write
-	pushb	101
-	outb
-
-#line	14
-	' * Write
-	pushb	100
-	outb
-
-#line	14
-	' * Write
-	pushb	58
-	outb
-
-#line	14
-	' * Write
-	pushb	32
-	outb
-
-#line	15
-	' * Read
-	push	bp
-	pushi	-6
-	addi
-	ini
-	storei
-
-#line	17
-	' * Assignment
-	push	bp
-	pushi	-2
-	addi
-	pushi	0
-	storei
- label0:
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	6
-	lti
-	jz	label1
-
-#line	19
+#line	20
 	' * Assignment
 	push	bp
 	pushi	-4
 	addi
-	pushi	0
-	storei
- label2:
 	push	bp
-	pushi	-4
-	addi
-	loadi
 	pushi	6
-	lti
-	jz	label3
+	addi
+	loadf
+	pushf	10.0
+	mulf
+	storef
 
 #line	21
 	' * Assignment
-	pusha	0
 	push	bp
-	pushi	-2
+	pushi	-5
+	addi
+	pushb	48
+	storeb
+	push	bp
+	pushi	4
 	addi
 	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	pushi	0
-	storei
-
-#line	22
-	' * Assignment
-	pusha	72
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	pushi	0
-	storei
+	pushi	256
+	lti
+	jz	label0
 
 #line	23
 	' * Assignment
-	pusha	144
 	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
+	pushi	-5
 	addi
 	push	bp
-	pushi	-4
+	pushi	4
 	addi
 	loadi
-	pushi	2
-	muli
-	addi
-	pushi	0
-	storei
+	i2b
+	storeb
 
 #line	24
 	' * Assignment
 	push	bp
-	pushi	-4
+	pushi	-7
+	addi
+	push	bp
+	pushi	-5
+	addi
+	loadb
+	b2i
+	storei
+	jmp	label1
+ label0:
+
+#line	27
+	' * Assignment
+	push	bp
+	pushi	-7
 	addi
 	push	bp
 	pushi	-4
+	addi
+	loadf
+	f2i
+	storei
+ label1:
+
+#line	28
+	' * Return
+	push	bp
+	pushi	-7
+	addi
+	loadi
+	ret	2, 7, 6
+
+#line	31
+
+ initialize:
+	' * Parameters
+	' * Local variables
+	' * int i (offset -2)
+	enter	2
+
+#line	33
+	' * Assignment
+	pusha	11
+	pushi	0
+	pushi	6
+	muli
+	addi
+	pushi	0
+	pushi	2
+	muli
+	addi
+	pushi	0
+	storei
+
+#line	34
+	' * Assignment
+	pusha	11
+	pushi	0
+	pushi	6
+	muli
+	addi
+	pushi	1
+	pushi	2
+	muli
+	addi
+	pushi	1
+	storei
+
+#line	35
+	' * Assignment
+	pusha	11
+	pushi	0
+	pushi	6
+	muli
+	addi
+	pushi	2
+	pushi	2
+	muli
+	addi
+	pushi	1
+	storei
+
+#line	36
+	' * Assignment
+	push	bp
+	pushi	-2
+	addi
+	pushi	1
+	storei
+ label2:
+	push	bp
+	pushi	-2
+	addi
+	loadi
+	pushi	8
+	lti
+	jz	label3
+
+#line	38
+	' * Assignment
+	pusha	11
+	push	bp
+	pushi	-2
+	addi
+	loadi
+	pushi	6
+	muli
+	addi
+	pushi	0
+	pushi	2
+	muli
+	addi
+	pusha	11
+	push	bp
+	pushi	-2
+	addi
+	loadi
+	pushi	1
+	subi
+	pushi	6
+	muli
+	addi
+	pushi	1
+	pushi	2
+	muli
+	addi
+	loadi
+	storei
+
+#line	39
+	' * Assignment
+	pusha	11
+	push	bp
+	pushi	-2
+	addi
+	loadi
+	pushi	6
+	muli
+	addi
+	pushi	1
+	pushi	2
+	muli
+	addi
+	pusha	11
+	push	bp
+	pushi	-2
+	addi
+	loadi
+	pushi	1
+	subi
+	pushi	6
+	muli
+	addi
+	pushi	2
+	pushi	2
+	muli
+	addi
+	loadi
+	storei
+
+#line	40
+	' * Assignment
+	pusha	11
+	push	bp
+	pushi	-2
+	addi
+	loadi
+	pushi	6
+	muli
+	addi
+	pushi	2
+	pushi	2
+	muli
+	addi
+	pusha	11
+	push	bp
+	pushi	-2
+	addi
+	loadi
+	pushi	6
+	muli
+	addi
+	pushi	0
+	pushi	2
+	muli
+	addi
+	loadi
+	pusha	11
+	push	bp
+	pushi	-2
+	addi
+	loadi
+	pushi	6
+	muli
+	addi
+	pushi	1
+	pushi	2
+	muli
+	addi
+	loadi
+	addi
+	storei
+
+#line	41
+	' * Assignment
+	push	bp
+	pushi	-2
+	addi
+	push	bp
+	pushi	-2
 	addi
 	loadi
 	pushi	1
@@ -233,154 +289,183 @@ halt
 	storei
 	jmp	label2
  label3:
+	ret	0, 2, 0
 
-#line	26
+#line	47
+
+ main:
+	' * Parameters
+	' * Local variables
+	' * int i (offset -2)
+	' * int j (offset -4)
+	enter	4
+
+#line	49
+	call	p
+
+#line	50
 	' * Assignment
 	push	bp
 	pushi	-2
-	addi
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	1
-	addi
-	storei
-	jmp	label0
- label1:
-
-#line	29
-	' * Assignment
-	push	bp
-	pushi	-10
 	addi
 	pushi	0
 	storei
 
-#line	30
+#line	51
+	' * Assignment
+	pusha	0
+	pushi	2
+	addi
+	pushb	48
+	storeb
+
+#line	52
+	' * Assignment
+	pusha	0
+	pushi	0
+	addi
+	pushb	48
+	b2i
+	storei
+
+#line	55
+	' * Write
+	push	bp
+	pushi	-2
+	addi
+	loadi
+	i2f
+	pusha	0
+	pushi	2
+	addi
+	loadb
+	b2i
+	call	f
+	outi
+
+#line	55
+	' * Write
+	pushb	10
+	outb
+
+#line	56
+	pushf	1.3
+	pushi	2
+	call	f
+	popi
+
+#line	58
+	call	initialize
+
+#line	59
 	' * Assignment
 	push	bp
-	pushi	-8
+	pushi	-2
 	addi
 	pushi	0
 	storei
  label4:
 	push	bp
-	pushi	-10
+	pushi	-2
 	addi
 	loadi
-	pushi	6
+	pushi	8
 	lti
 	jz	label5
 
-#line	33
-	' * Assignment
+#line	62
+	' * Write
+	pushb	40
+	outb
+
+#line	62
+	' * Write
 	push	bp
-	pushi	-12
-	addi
-	push	bp
-	pushi	-6
+	pushi	-2
 	addi
 	loadi
-	push	bp
-	pushi	-8
-	addi
-	loadi
-	pushi	3
-	muli
-	addi
 	pushi	1
 	addi
-	pushi	6
-	modi
-	storei
+	outi
 
-#line	34
-	' * Assignment
+#line	62
+	' * Write
+	pushb	41
+	outb
+
+#line	62
+	' * Write
+	pusha	11
 	push	bp
-	pushi	-14
-	addi
-	push	bp
-	pushi	-6
+	pushi	-2
 	addi
 	loadi
-	pushi	2
-	muli
-	push	bp
-	pushi	-8
-	addi
-	loadi
-	pushi	5
-	muli
-	addi
-	pushi	2
-	addi
 	pushi	6
-	modi
-	storei
-	pusha	0
-	push	bp
-	pushi	-12
-	addi
-	loadi
-	pushi	12
 	muli
 	addi
-	push	bp
-	pushi	-14
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
 	pushi	0
-	eqi
-	jz	label6
-
-#line	37
-	' * Assignment
-	pusha	0
-	push	bp
-	pushi	-12
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-14
-	addi
-	loadi
 	pushi	2
 	muli
 	addi
-	pushi	1
-	storei
+	loadi
+	outi
 
-#line	38
-	' * Assignment
+#line	62
+	' * Write
+	pushb	43
+	outb
+
+#line	62
+	' * Write
+	pusha	11
 	push	bp
-	pushi	-10
-	addi
-	push	bp
-	pushi	-10
+	pushi	-2
 	addi
 	loadi
-	pushi	1
+	pushi	6
+	muli
 	addi
-	storei
-	jmp	label7
- label6:
- label7:
+	pushi	1
+	pushi	2
+	muli
+	addi
+	loadi
+	outi
 
-#line	41
+#line	62
+	' * Write
+	pushb	61
+	outb
+
+#line	62
+	' * Write
+	pusha	11
+	push	bp
+	pushi	-2
+	addi
+	loadi
+	pushi	6
+	muli
+	addi
+	pushi	2
+	pushi	2
+	muli
+	addi
+	loadi
+	outi
+
+#line	62
+	' * Write
+	pushb	10
+	outb
+
+#line	65
 	' * Assignment
 	push	bp
-	pushi	-8
+	pushi	-2
 	addi
 	push	bp
-	pushi	-8
+	pushi	-2
 	addi
 	loadi
 	pushi	1
@@ -389,88 +474,90 @@ halt
 	jmp	label4
  label5:
 
-#line	44
+#line	68
+	' * Assignment
+	pusha	3
+	pushi	1
+	pushi	4
+	muli
+	addi
+	pushi	0
+	addi
+	pushi	1
+	pushi	2
+	muli
+	addi
+	pushi	0
+	addi
+	pushi	56
+	storei
+
+#line	70
+	' * Write
+	pusha	3
+	pushi	1
+	pushi	4
+	muli
+	addi
+	pushi	0
+	addi
+	pushi	1
+	pushi	2
+	muli
+	addi
+	pushi	0
+	addi
+	loadi
+	outi
+
+#line	70
+	' * Write
+	pushb	10
+	outb
+
+#line	71
 	' * Assignment
 	push	bp
 	pushi	-2
+	addi
+	pushi	0
+	storei
+ label6:
+	push	bp
+	pushi	-2
+	addi
+	loadi
+	pushi	2
+	lti
+	jz	label7
+
+#line	73
+	' * Assignment
+	push	bp
+	pushi	-4
 	addi
 	pushi	0
 	storei
  label8:
 	push	bp
-	pushi	-2
+	pushi	-4
 	addi
 	loadi
-	pushi	6
+	pushi	2
 	lti
 	jz	label9
 
-#line	46
+#line	75
 	' * Assignment
+	pusha	3
 	push	bp
-	pushi	-4
+	pushi	-2
+	addi
+	loadi
+	pushi	4
+	muli
 	addi
 	pushi	0
-	storei
- label10:
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	6
-	lti
-	jz	label11
-	pusha	0
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pushi	1
-	eqi
-	jz	label12
-
-#line	49
-	' * Assignment
-	pusha	72
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	pushi	9
-	storei
-	jmp	label13
- label12:
-
-#line	51
-	' * Assignment
-	pusha	72
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
 	addi
 	push	bp
 	pushi	-4
@@ -480,551 +567,25 @@ halt
 	muli
 	addi
 	pushi	0
-	storei
+	addi
 	push	bp
 	pushi	-2
 	addi
 	loadi
-	pushi	0
-	gti
-	jz	label14
-
-#line	54
-	' * Assignment
-	pusha	72
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
 	push	bp
 	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	pusha	72
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pusha	0
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	1
-	subi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
 	addi
 	loadi
 	addi
 	storei
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	0
-	gti
-	jz	label16
-
-#line	57
-	' * Assignment
-	pusha	72
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	pusha	72
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pusha	0
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	1
-	subi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	1
-	subi
-	pushi	2
-	muli
-	addi
-	loadi
-	addi
-	storei
-	jmp	label17
- label16:
- label17:
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	5
-	lti
-	jz	label18
-
-#line	60
-	' * Assignment
-	pusha	72
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	pusha	72
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pusha	0
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	1
-	subi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	1
-	addi
-	pushi	2
-	muli
-	addi
-	loadi
-	addi
-	storei
-	jmp	label19
- label18:
- label19:
-	jmp	label15
- label14:
- label15:
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	0
-	gti
-	jz	label20
-
-#line	64
-	' * Assignment
-	pusha	72
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	pusha	72
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pusha	0
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	1
-	subi
-	pushi	2
-	muli
-	addi
-	loadi
-	addi
-	storei
-	jmp	label21
- label20:
- label21:
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	5
-	lti
-	jz	label22
-
-#line	67
-	' * Assignment
-	pusha	72
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	pusha	72
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pusha	0
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	1
-	addi
-	pushi	2
-	muli
-	addi
-	loadi
-	addi
-	storei
-	jmp	label23
- label22:
- label23:
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	5
-	lti
-	jz	label24
-
-#line	70
-	' * Assignment
-	pusha	72
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	pusha	72
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pusha	0
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	1
-	addi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	addi
-	storei
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	0
-	gti
-	jz	label26
-
-#line	73
-	' * Assignment
-	pusha	72
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	pusha	72
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pusha	0
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	1
-	addi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	1
-	subi
-	pushi	2
-	muli
-	addi
-	loadi
-	addi
-	storei
-	jmp	label27
- label26:
- label27:
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	5
-	lti
-	jz	label28
 
 #line	76
 	' * Assignment
-	pusha	72
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	pusha	72
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pusha	0
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	1
-	addi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	1
-	addi
-	pushi	2
-	muli
-	addi
-	loadi
-	addi
-	storei
-	jmp	label29
- label28:
- label29:
-	jmp	label25
- label24:
- label25:
- label13:
-
-#line	80
-	' * Assignment
 	push	bp
 	pushi	-4
 	addi
 	push	bp
 	pushi	-4
-	addi
-	loadi
-	pushi	1
-	addi
-	storei
-	jmp	label10
- label11:
-
-#line	82
-	' * Assignment
-	push	bp
-	pushi	-2
-	addi
-	push	bp
-	pushi	-2
 	addi
 	loadi
 	pushi	1
@@ -1033,201 +594,102 @@ halt
 	jmp	label8
  label9:
 
-#line	85
-	' * Write
-	pushb	10
-	outb
+#line	78
+	' * Assignment
+	push	bp
+	pushi	-2
+	addi
+	push	bp
+	pushi	-2
+	addi
+	loadi
+	pushi	1
+	addi
+	storei
+	jmp	label6
+ label7:
+
+#line	81
+	' * Assignment
+	push	bp
+	pushi	-2
+	addi
+	pushi	0
+	storei
+ label10:
+	push	bp
+	pushi	-2
+	addi
+	loadi
+	pushi	2
+	lti
+	jz	label11
+
+#line	83
+	' * Assignment
+	push	bp
+	pushi	-4
+	addi
+	pushi	0
+	storei
+ label12:
+	push	bp
+	pushi	-4
+	addi
+	loadi
+	pushi	2
+	lti
+	jz	label13
 
 #line	86
 	' * Write
-	pushb	66
-	outb
+	pusha	3
+	push	bp
+	pushi	-2
+	addi
+	loadi
+	pushi	4
+	muli
+	addi
+	pushi	0
+	addi
+	push	bp
+	pushi	-4
+	addi
+	loadi
+	pushi	2
+	muli
+	addi
+	pushi	0
+	addi
+	loadi
+	outi
 
 #line	86
-	' * Write
-	pushb	111
-	outb
-
-#line	86
-	' * Write
-	pushb	97
-	outb
-
-#line	86
-	' * Write
-	pushb	114
-	outb
-
-#line	86
-	' * Write
-	pushb	100
-	outb
-
-#line	86
-	' * Write
-	pushb	58
-	outb
-
-#line	86
-	' * Write
-	pushb	10
-	outb
-
-#line	87
 	' * Write
 	pushb	32
 	outb
 
 #line	87
-	' * Write
-	pushb	32
-	outb
-
-#line	87
-	' * Write
-	pushb	48
-	outb
-
-#line	87
-	' * Write
-	pushb	32
-	outb
-
-#line	87
-	' * Write
-	pushb	49
-	outb
-
-#line	87
-	' * Write
-	pushb	32
-	outb
-
-#line	87
-	' * Write
-	pushb	50
-	outb
-
-#line	87
-	' * Write
-	pushb	32
-	outb
-
-#line	87
-	' * Write
-	pushb	51
-	outb
-
-#line	87
-	' * Write
-	pushb	32
-	outb
-
-#line	87
-	' * Write
-	pushb	52
-	outb
-
-#line	87
-	' * Write
-	pushb	32
-	outb
-
-#line	87
-	' * Write
-	pushb	53
-	outb
-
-#line	87
-	' * Write
-	pushb	10
-	outb
+	' * Assignment
+	push	bp
+	pushi	-4
+	addi
+	push	bp
+	pushi	-4
+	addi
+	loadi
+	pushi	1
+	addi
+	storei
+	jmp	label12
+ label13:
 
 #line	89
 	' * Assignment
 	push	bp
 	pushi	-2
 	addi
-	pushi	0
-	storei
- label30:
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	6
-	lti
-	jz	label31
-
-#line	91
-	' * Write
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	outi
-
-#line	91
-	' * Write
-	pushb	58
-	outb
-
-#line	91
-	' * Write
-	pushb	32
-	outb
-
-#line	92
-	' * Assignment
-	push	bp
-	pushi	-4
-	addi
-	pushi	0
-	storei
- label32:
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	6
-	lti
-	jz	label33
-
-#line	94
-	' * Write
-	pushb	46
-	outb
-
-#line	94
-	' * Write
-	pushb	32
-	outb
-
-#line	95
-	' * Assignment
-	push	bp
-	pushi	-4
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	1
-	addi
-	storei
-	jmp	label32
- label33:
-
-#line	97
-	' * Write
-	pushb	10
-	outb
-
-#line	98
-	' * Assignment
-	push	bp
-	pushi	-2
-	addi
 	push	bp
 	pushi	-2
 	addi
@@ -1235,2108 +697,6 @@ halt
 	pushi	1
 	addi
 	storei
-	jmp	label30
- label31:
-
-#line	101
-	' * Assignment
-	push	bp
-	pushi	-16
-	addi
-	pushi	0
-	storei
-
-#line	102
-	' * Assignment
-	push	bp
-	pushi	-18
-	addi
-	pushi	1
-	storei
-
-#line	103
-	' * Assignment
-	push	bp
-	pushi	-20
-	addi
-	pushi	0
-	storei
- label34:
-	push	bp
-	pushi	-16
-	addi
-	loadi
-	pushi	3
-	lti
-	push	bp
-	pushi	-18
-	addi
-	loadi
-	pushi	1
-	eqi
-	and
-	jz	label35
-
-#line	106
-	' * Write
-	pushb	10
-	outb
-
-#line	107
-	' * Write
-	pushb	84
-	outb
-
-#line	107
-	' * Write
-	pushb	117
-	outb
-
-#line	107
-	' * Write
-	pushb	114
-	outb
-
-#line	107
-	' * Write
-	pushb	110
-	outb
-
-#line	107
-	' * Write
-	pushb	32
-	outb
-
-#line	107
-	' * Write
-	push	bp
-	pushi	-16
-	addi
-	loadi
-	pushi	1
-	addi
-	outi
-
-#line	107
-	' * Write
-	pushb	10
-	outb
-
-#line	109
-	' * Write
-	pushb	82
-	outb
-
-#line	109
-	' * Write
-	pushb	111
-	outb
-
-#line	109
-	' * Write
-	pushb	119
-	outb
-
-#line	109
-	' * Write
-	pushb	58
-	outb
-
-#line	109
-	' * Write
-	pushb	32
-	outb
-
-#line	110
-	' * Read
-	push	bp
-	pushi	-12
-	addi
-	ini
-	storei
-
-#line	112
-	' * Write
-	pushb	67
-	outb
-
-#line	112
-	' * Write
-	pushb	111
-	outb
-
-#line	112
-	' * Write
-	pushb	108
-	outb
-
-#line	112
-	' * Write
-	pushb	58
-	outb
-
-#line	112
-	' * Write
-	pushb	32
-	outb
-
-#line	113
-	' * Read
-	push	bp
-	pushi	-14
-	addi
-	ini
-	storei
-
-#line	115
-	' * Assignment
-	push	bp
-	pushi	-22
-	addi
-	pushi	1
-	storei
-	push	bp
-	pushi	-12
-	addi
-	loadi
-	pushi	0
-	lti
-	jz	label36
-
-#line	118
-	' * Assignment
-	push	bp
-	pushi	-22
-	addi
-	pushi	0
-	storei
-	jmp	label37
- label36:
- label37:
-	push	bp
-	pushi	-12
-	addi
-	loadi
-	pushi	6
-	gei
-	jz	label38
-
-#line	121
-	' * Assignment
-	push	bp
-	pushi	-22
-	addi
-	pushi	0
-	storei
-	jmp	label39
- label38:
- label39:
-	push	bp
-	pushi	-14
-	addi
-	loadi
-	pushi	0
-	lti
-	jz	label40
-
-#line	124
-	' * Assignment
-	push	bp
-	pushi	-22
-	addi
-	pushi	0
-	storei
-	jmp	label41
- label40:
- label41:
-	push	bp
-	pushi	-14
-	addi
-	loadi
-	pushi	6
-	gei
-	jz	label42
-
-#line	127
-	' * Assignment
-	push	bp
-	pushi	-22
-	addi
-	pushi	0
-	storei
-	jmp	label43
- label42:
- label43:
-	push	bp
-	pushi	-22
-	addi
-	loadi
-	pushi	0
-	eqi
-	jz	label44
-
-#line	130
-	' * Write
-	pushb	73
-	outb
-
-#line	130
-	' * Write
-	pushb	78
-	outb
-
-#line	130
-	' * Write
-	pushb	86
-	outb
-
-#line	130
-	' * Write
-	pushb	65
-	outb
-
-#line	130
-	' * Write
-	pushb	76
-	outb
-
-#line	130
-	' * Write
-	pushb	73
-	outb
-
-#line	130
-	' * Write
-	pushb	68
-	outb
-
-#line	130
-	' * Write
-	pushb	10
-	outb
-	jmp	label45
- label44:
-	pusha	0
-	push	bp
-	pushi	-12
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-14
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pushi	1
-	eqi
-	jz	label46
-
-#line	133
-	' * Assignment
-	push	bp
-	pushi	-18
-	addi
-	pushi	0
-	storei
-
-#line	134
-	' * Assignment
-	pusha	144
-	push	bp
-	pushi	-12
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-14
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	pushi	1
-	storei
-
-#line	135
-	' * Write
-	pushb	66
-	outb
-
-#line	135
-	' * Write
-	pushb	79
-	outb
-
-#line	135
-	' * Write
-	pushb	79
-	outb
-
-#line	135
-	' * Write
-	pushb	77
-	outb
-
-#line	135
-	' * Write
-	pushb	33
-	outb
-
-#line	135
-	' * Write
-	pushb	10
-	outb
-	jmp	label47
- label46:
-	pusha	144
-	push	bp
-	pushi	-12
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-14
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pushi	1
-	eqi
-	jz	label48
-
-#line	139
-	' * Write
-	pushb	82
-	outb
-
-#line	139
-	' * Write
-	pushb	69
-	outb
-
-#line	139
-	' * Write
-	pushb	80
-	outb
-
-#line	139
-	' * Write
-	pushb	69
-	outb
-
-#line	139
-	' * Write
-	pushb	65
-	outb
-
-#line	139
-	' * Write
-	pushb	84
-	outb
-
-#line	139
-	' * Write
-	pushb	69
-	outb
-
-#line	139
-	' * Write
-	pushb	68
-	outb
-
-#line	139
-	' * Write
-	pushb	10
-	outb
-	jmp	label49
- label48:
-
-#line	141
-	' * Assignment
-	pusha	144
-	push	bp
-	pushi	-12
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-14
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	pushi	1
-	storei
-
-#line	142
-	' * Assignment
-	push	bp
-	pushi	-20
-	addi
-	push	bp
-	pushi	-20
-	addi
-	loadi
-	pushi	1
-	addi
-	storei
-	pusha	72
-	push	bp
-	pushi	-12
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-14
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pushi	0
-	eqi
-	jz	label50
-	push	bp
-	pushi	-12
-	addi
-	loadi
-	pushi	0
-	gti
-	jz	label52
-
-#line	146
-	' * Assignment
-	push	bp
-	pushi	-24
-	addi
-	push	bp
-	pushi	-12
-	addi
-	loadi
-	pushi	1
-	subi
-	storei
-
-#line	147
-	' * Assignment
-	push	bp
-	pushi	-26
-	addi
-	push	bp
-	pushi	-14
-	addi
-	loadi
-	storei
-	pusha	0
-	push	bp
-	pushi	-24
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-26
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pushi	0
-	eqi
-	jz	label54
-	pusha	144
-	push	bp
-	pushi	-24
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-26
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pushi	0
-	eqi
-	jz	label56
-
-#line	151
-	' * Assignment
-	pusha	144
-	push	bp
-	pushi	-24
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-26
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	pushi	1
-	storei
-
-#line	152
-	' * Assignment
-	push	bp
-	pushi	-20
-	addi
-	push	bp
-	pushi	-20
-	addi
-	loadi
-	pushi	1
-	addi
-	storei
-	jmp	label57
- label56:
- label57:
-	jmp	label55
- label54:
- label55:
-	push	bp
-	pushi	-14
-	addi
-	loadi
-	pushi	0
-	gti
-	jz	label58
-
-#line	157
-	' * Assignment
-	push	bp
-	pushi	-24
-	addi
-	push	bp
-	pushi	-12
-	addi
-	loadi
-	pushi	1
-	subi
-	storei
-
-#line	158
-	' * Assignment
-	push	bp
-	pushi	-26
-	addi
-	push	bp
-	pushi	-14
-	addi
-	loadi
-	pushi	1
-	subi
-	storei
-	pusha	0
-	push	bp
-	pushi	-24
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-26
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pushi	0
-	eqi
-	jz	label60
-	pusha	144
-	push	bp
-	pushi	-24
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-26
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pushi	0
-	eqi
-	jz	label62
-
-#line	162
-	' * Assignment
-	pusha	144
-	push	bp
-	pushi	-24
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-26
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	pushi	1
-	storei
-
-#line	163
-	' * Assignment
-	push	bp
-	pushi	-20
-	addi
-	push	bp
-	pushi	-20
-	addi
-	loadi
-	pushi	1
-	addi
-	storei
-	jmp	label63
- label62:
- label63:
-	jmp	label61
- label60:
- label61:
-	jmp	label59
- label58:
- label59:
-	push	bp
-	pushi	-14
-	addi
-	loadi
-	pushi	5
-	lti
-	jz	label64
-
-#line	169
-	' * Assignment
-	push	bp
-	pushi	-24
-	addi
-	push	bp
-	pushi	-12
-	addi
-	loadi
-	pushi	1
-	subi
-	storei
-
-#line	170
-	' * Assignment
-	push	bp
-	pushi	-26
-	addi
-	push	bp
-	pushi	-14
-	addi
-	loadi
-	pushi	1
-	addi
-	storei
-	pusha	0
-	push	bp
-	pushi	-24
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-26
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pushi	0
-	eqi
-	jz	label66
-	pusha	144
-	push	bp
-	pushi	-24
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-26
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pushi	0
-	eqi
-	jz	label68
-
-#line	174
-	' * Assignment
-	pusha	144
-	push	bp
-	pushi	-24
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-26
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	pushi	1
-	storei
-
-#line	175
-	' * Assignment
-	push	bp
-	pushi	-20
-	addi
-	push	bp
-	pushi	-20
-	addi
-	loadi
-	pushi	1
-	addi
-	storei
-	jmp	label69
- label68:
- label69:
-	jmp	label67
- label66:
- label67:
-	jmp	label65
- label64:
- label65:
-	jmp	label53
- label52:
- label53:
-	push	bp
-	pushi	-14
-	addi
-	loadi
-	pushi	0
-	gti
-	jz	label70
-
-#line	182
-	' * Assignment
-	push	bp
-	pushi	-24
-	addi
-	push	bp
-	pushi	-12
-	addi
-	loadi
-	storei
-
-#line	183
-	' * Assignment
-	push	bp
-	pushi	-26
-	addi
-	push	bp
-	pushi	-14
-	addi
-	loadi
-	pushi	1
-	subi
-	storei
-	pusha	0
-	push	bp
-	pushi	-24
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-26
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pushi	0
-	eqi
-	jz	label72
-	pusha	144
-	push	bp
-	pushi	-24
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-26
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pushi	0
-	eqi
-	jz	label74
-
-#line	187
-	' * Assignment
-	pusha	144
-	push	bp
-	pushi	-24
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-26
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	pushi	1
-	storei
-
-#line	188
-	' * Assignment
-	push	bp
-	pushi	-20
-	addi
-	push	bp
-	pushi	-20
-	addi
-	loadi
-	pushi	1
-	addi
-	storei
-	jmp	label75
- label74:
- label75:
-	jmp	label73
- label72:
- label73:
-	jmp	label71
- label70:
- label71:
-	push	bp
-	pushi	-14
-	addi
-	loadi
-	pushi	5
-	lti
-	jz	label76
-
-#line	194
-	' * Assignment
-	push	bp
-	pushi	-24
-	addi
-	push	bp
-	pushi	-12
-	addi
-	loadi
-	storei
-
-#line	195
-	' * Assignment
-	push	bp
-	pushi	-26
-	addi
-	push	bp
-	pushi	-14
-	addi
-	loadi
-	pushi	1
-	addi
-	storei
-	pusha	0
-	push	bp
-	pushi	-24
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-26
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pushi	0
-	eqi
-	jz	label78
-	pusha	144
-	push	bp
-	pushi	-24
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-26
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pushi	0
-	eqi
-	jz	label80
-
-#line	199
-	' * Assignment
-	pusha	144
-	push	bp
-	pushi	-24
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-26
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	pushi	1
-	storei
-
-#line	200
-	' * Assignment
-	push	bp
-	pushi	-20
-	addi
-	push	bp
-	pushi	-20
-	addi
-	loadi
-	pushi	1
-	addi
-	storei
-	jmp	label81
- label80:
- label81:
-	jmp	label79
- label78:
- label79:
-	jmp	label77
- label76:
- label77:
-	push	bp
-	pushi	-12
-	addi
-	loadi
-	pushi	5
-	lti
-	jz	label82
-
-#line	206
-	' * Assignment
-	push	bp
-	pushi	-24
-	addi
-	push	bp
-	pushi	-12
-	addi
-	loadi
-	pushi	1
-	addi
-	storei
-
-#line	207
-	' * Assignment
-	push	bp
-	pushi	-26
-	addi
-	push	bp
-	pushi	-14
-	addi
-	loadi
-	storei
-	pusha	0
-	push	bp
-	pushi	-24
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-26
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pushi	0
-	eqi
-	jz	label84
-	pusha	144
-	push	bp
-	pushi	-24
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-26
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pushi	0
-	eqi
-	jz	label86
-
-#line	211
-	' * Assignment
-	pusha	144
-	push	bp
-	pushi	-24
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-26
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	pushi	1
-	storei
-
-#line	212
-	' * Assignment
-	push	bp
-	pushi	-20
-	addi
-	push	bp
-	pushi	-20
-	addi
-	loadi
-	pushi	1
-	addi
-	storei
-	jmp	label87
- label86:
- label87:
-	jmp	label85
- label84:
- label85:
-	push	bp
-	pushi	-14
-	addi
-	loadi
-	pushi	0
-	gti
-	jz	label88
-
-#line	217
-	' * Assignment
-	push	bp
-	pushi	-24
-	addi
-	push	bp
-	pushi	-12
-	addi
-	loadi
-	pushi	1
-	addi
-	storei
-
-#line	218
-	' * Assignment
-	push	bp
-	pushi	-26
-	addi
-	push	bp
-	pushi	-14
-	addi
-	loadi
-	pushi	1
-	subi
-	storei
-	pusha	0
-	push	bp
-	pushi	-24
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-26
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pushi	0
-	eqi
-	jz	label90
-	pusha	144
-	push	bp
-	pushi	-24
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-26
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pushi	0
-	eqi
-	jz	label92
-
-#line	222
-	' * Assignment
-	pusha	144
-	push	bp
-	pushi	-24
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-26
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	pushi	1
-	storei
-
-#line	223
-	' * Assignment
-	push	bp
-	pushi	-20
-	addi
-	push	bp
-	pushi	-20
-	addi
-	loadi
-	pushi	1
-	addi
-	storei
-	jmp	label93
- label92:
- label93:
-	jmp	label91
- label90:
- label91:
-	jmp	label89
- label88:
- label89:
-	push	bp
-	pushi	-14
-	addi
-	loadi
-	pushi	5
-	lti
-	jz	label94
-
-#line	229
-	' * Assignment
-	push	bp
-	pushi	-24
-	addi
-	push	bp
-	pushi	-12
-	addi
-	loadi
-	pushi	1
-	addi
-	storei
-
-#line	230
-	' * Assignment
-	push	bp
-	pushi	-26
-	addi
-	push	bp
-	pushi	-14
-	addi
-	loadi
-	pushi	1
-	addi
-	storei
-	pusha	0
-	push	bp
-	pushi	-24
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-26
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pushi	0
-	eqi
-	jz	label96
-	pusha	144
-	push	bp
-	pushi	-24
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-26
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pushi	0
-	eqi
-	jz	label98
-
-#line	234
-	' * Assignment
-	pusha	144
-	push	bp
-	pushi	-24
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-26
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	pushi	1
-	storei
-
-#line	235
-	' * Assignment
-	push	bp
-	pushi	-20
-	addi
-	push	bp
-	pushi	-20
-	addi
-	loadi
-	pushi	1
-	addi
-	storei
-	jmp	label99
- label98:
- label99:
-	jmp	label97
- label96:
- label97:
-	jmp	label95
- label94:
- label95:
-	jmp	label83
- label82:
- label83:
-	jmp	label51
- label50:
- label51:
- label49:
- label47:
- label45:
-
-#line	245
-	' * Write
-	pushb	10
-	outb
-
-#line	246
-	' * Write
-	pushb	66
-	outb
-
-#line	246
-	' * Write
-	pushb	111
-	outb
-
-#line	246
-	' * Write
-	pushb	97
-	outb
-
-#line	246
-	' * Write
-	pushb	114
-	outb
-
-#line	246
-	' * Write
-	pushb	100
-	outb
-
-#line	246
-	' * Write
-	pushb	58
-	outb
-
-#line	246
-	' * Write
-	pushb	10
-	outb
-
-#line	247
-	' * Write
-	pushb	32
-	outb
-
-#line	247
-	' * Write
-	pushb	32
-	outb
-
-#line	247
-	' * Write
-	pushb	48
-	outb
-
-#line	247
-	' * Write
-	pushb	32
-	outb
-
-#line	247
-	' * Write
-	pushb	49
-	outb
-
-#line	247
-	' * Write
-	pushb	32
-	outb
-
-#line	247
-	' * Write
-	pushb	50
-	outb
-
-#line	247
-	' * Write
-	pushb	32
-	outb
-
-#line	247
-	' * Write
-	pushb	51
-	outb
-
-#line	247
-	' * Write
-	pushb	32
-	outb
-
-#line	247
-	' * Write
-	pushb	52
-	outb
-
-#line	247
-	' * Write
-	pushb	32
-	outb
-
-#line	247
-	' * Write
-	pushb	53
-	outb
-
-#line	247
-	' * Write
-	pushb	10
-	outb
-
-#line	249
-	' * Assignment
-	push	bp
-	pushi	-2
-	addi
-	pushi	0
-	storei
- label100:
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	6
-	lti
-	jz	label101
-
-#line	251
-	' * Write
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	outi
-
-#line	251
-	' * Write
-	pushb	58
-	outb
-
-#line	251
-	' * Write
-	pushb	32
-	outb
-
-#line	252
-	' * Assignment
-	push	bp
-	pushi	-4
-	addi
-	pushi	0
-	storei
- label102:
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	6
-	lti
-	jz	label103
-	pusha	144
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pushi	1
-	eqi
-	jz	label104
-	pusha	0
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pushi	1
-	eqi
-	jz	label106
-
-#line	256
-	' * Write
-	pushb	42
-	outb
-
-#line	256
-	' * Write
-	pushb	32
-	outb
-	jmp	label107
- label106:
-
-#line	258
-	' * Write
-	pusha	72
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	outi
-
-#line	258
-	' * Write
-	pushb	32
-	outb
- label107:
-	jmp	label105
- label104:
-
-#line	261
-	' * Write
-	pushb	46
-	outb
-
-#line	261
-	' * Write
-	pushb	32
-	outb
- label105:
-
-#line	263
-	' * Assignment
-	push	bp
-	pushi	-4
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	1
-	addi
-	storei
-	jmp	label102
- label103:
-
-#line	265
-	' * Write
-	pushb	10
-	outb
-
-#line	266
-	' * Assignment
-	push	bp
-	pushi	-2
-	addi
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	1
-	addi
-	storei
-	jmp	label100
- label101:
-
-#line	269
-	' * Assignment
-	push	bp
-	pushi	-16
-	addi
-	push	bp
-	pushi	-16
-	addi
-	loadi
-	pushi	1
-	addi
-	storei
-	jmp	label34
- label35:
-
-#line	272
-	' * Write
-	pushb	10
-	outb
-	push	bp
-	pushi	-18
-	addi
-	loadi
-	pushi	1
-	eqi
-	jz	label108
-
-#line	275
-	' * Write
-	pushb	70
-	outb
-
-#line	275
-	' * Write
-	pushb	73
-	outb
-
-#line	275
-	' * Write
-	pushb	78
-	outb
-
-#line	275
-	' * Write
-	pushb	73
-	outb
-
-#line	275
-	' * Write
-	pushb	83
-	outb
-
-#line	275
-	' * Write
-	pushb	72
-	outb
-
-#line	275
-	' * Write
-	pushb	69
-	outb
-
-#line	275
-	' * Write
-	pushb	68
-	outb
-
-#line	275
-	' * Write
-	pushb	10
-	outb
-	jmp	label109
- label108:
-
-#line	277
-	' * Write
-	pushb	71
-	outb
-
-#line	277
-	' * Write
-	pushb	65
-	outb
-
-#line	277
-	' * Write
-	pushb	77
-	outb
-
-#line	277
-	' * Write
-	pushb	69
-	outb
-
-#line	277
-	' * Write
-	pushb	32
-	outb
-
-#line	277
-	' * Write
-	pushb	79
-	outb
-
-#line	277
-	' * Write
-	pushb	86
-	outb
-
-#line	277
-	' * Write
-	pushb	69
-	outb
-
-#line	277
-	' * Write
-	pushb	82
-	outb
-
-#line	277
-	' * Write
-	pushb	10
-	outb
- label109:
-
-#line	279
-	' * Write
-	pushb	83
-	outb
-
-#line	279
-	' * Write
-	pushb	99
-	outb
-
-#line	279
-	' * Write
-	pushb	111
-	outb
-
-#line	279
-	' * Write
-	pushb	114
-	outb
-
-#line	279
-	' * Write
-	pushb	101
-	outb
-
-#line	279
-	' * Write
-	pushb	58
-	outb
-
-#line	279
-	' * Write
-	pushb	32
-	outb
-
-#line	279
-	' * Write
-	push	bp
-	pushi	-20
-	addi
-	loadi
-	outi
-
-#line	279
-	' * Write
-	pushb	10
-	outb
-
-#line	281
-	' * Write
-	pushb	10
-	outb
-
-#line	282
-	' * Write
-	pushb	83
-	outb
-
-#line	282
-	' * Write
-	pushb	111
-	outb
-
-#line	282
-	' * Write
-	pushb	108
-	outb
-
-#line	282
-	' * Write
-	pushb	117
-	outb
-
-#line	282
-	' * Write
-	pushb	116
-	outb
-
-#line	282
-	' * Write
-	pushb	105
-	outb
-
-#line	282
-	' * Write
-	pushb	111
-	outb
-
-#line	282
-	' * Write
-	pushb	110
-	outb
-
-#line	282
-	' * Write
-	pushb	58
-	outb
-
-#line	282
-	' * Write
-	pushb	10
-	outb
-
-#line	283
-	' * Write
-	pushb	32
-	outb
-
-#line	283
-	' * Write
-	pushb	32
-	outb
-
-#line	283
-	' * Write
-	pushb	48
-	outb
-
-#line	283
-	' * Write
-	pushb	32
-	outb
-
-#line	283
-	' * Write
-	pushb	49
-	outb
-
-#line	283
-	' * Write
-	pushb	32
-	outb
-
-#line	283
-	' * Write
-	pushb	50
-	outb
-
-#line	283
-	' * Write
-	pushb	32
-	outb
-
-#line	283
-	' * Write
-	pushb	51
-	outb
-
-#line	283
-	' * Write
-	pushb	32
-	outb
-
-#line	283
-	' * Write
-	pushb	52
-	outb
-
-#line	283
-	' * Write
-	pushb	32
-	outb
-
-#line	283
-	' * Write
-	pushb	53
-	outb
-
-#line	283
-	' * Write
-	pushb	10
-	outb
-
-#line	285
-	' * Assignment
-	push	bp
-	pushi	-2
-	addi
-	pushi	0
-	storei
- label110:
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	6
-	lti
-	jz	label111
-
-#line	287
-	' * Write
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	outi
-
-#line	287
-	' * Write
-	pushb	58
-	outb
-
-#line	287
-	' * Write
-	pushb	32
-	outb
-
-#line	288
-	' * Assignment
-	push	bp
-	pushi	-4
-	addi
-	pushi	0
-	storei
- label112:
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	6
-	lti
-	jz	label113
-	pusha	0
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	pushi	1
-	eqi
-	jz	label114
-
-#line	291
-	' * Write
-	pushb	42
-	outb
-
-#line	291
-	' * Write
-	pushb	32
-	outb
-	jmp	label115
- label114:
-
-#line	293
-	' * Write
-	pusha	72
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	12
-	muli
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	2
-	muli
-	addi
-	loadi
-	outi
-
-#line	293
-	' * Write
-	pushb	32
-	outb
- label115:
-
-#line	295
-	' * Assignment
-	push	bp
-	pushi	-4
-	addi
-	push	bp
-	pushi	-4
-	addi
-	loadi
-	pushi	1
-	addi
-	storei
-	jmp	label112
- label113:
-
-#line	297
-	' * Write
-	pushb	10
-	outb
-
-#line	298
-	' * Assignment
-	push	bp
-	pushi	-2
-	addi
-	push	bp
-	pushi	-2
-	addi
-	loadi
-	pushi	1
-	addi
-	storei
-	jmp	label110
- label111:
-	ret	0, 26, 0
+	jmp	label10
+ label11:
+	ret	0, 4, 0

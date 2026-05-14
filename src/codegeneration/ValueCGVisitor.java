@@ -2,6 +2,7 @@ package codegeneration;
 
 
 import ast.Expression;
+import ast.Statement;
 import ast.expressions.*;
 import ast.expressions.Arithmetic;
 import ast.expressions.Cast;
@@ -10,6 +11,7 @@ import ast.expressions.Logic;
 import ast.expressions.UnaryMinus;
 import ast.expressions.UnaryNot;
 import ast.statements.Invocation;
+import ast.types.FunctionType;
 import ast.types.IntType;
 
 public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
@@ -188,15 +190,19 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 
 
     /**
-     * value[[Invocation: expression1 -> expression2* expression3]]():
-     * 	for(Expression exp : expression2*)
-     * 		value[[exp*]]()
-     * 	<call> expression3.getName()
+     * value[[Invocation: expression1 -> expression2(esto es una variable) expression3*]]():
+     *  for(int indice=0; indice<exp3*.size; indice++ ){
+     * 		value[[exp3.get(indice)]]()
+     * 	    codegenerator.convertTo(exp3.get(indice).type, expression2.type.parameters.get(indice).type)
+     * 	<call> expression2.getName()
      */
     @Override
     public Void visit(Invocation i, Void o) {
-        for(Expression exp : i.getArguments()) {
+        for(int indice=0; indice<i.getArguments().size(); indice++  ){
+            Expression exp = i.getArguments().get(indice);
             exp.accept(this, o);
+            FunctionType functionType = (FunctionType) i.getFunction().getType();
+            getCodeGenerator().convertTo(exp.getType(), functionType.getParameters().get(indice).getType());
         }
         getCodeGenerator().call(i.getFunction().getName());
         return null;

@@ -1,5 +1,6 @@
 package codegeneration;
 
+import ast.Expression;
 import ast.types.CharType;
 import ast.types.IntType;
 import ast.types.NumberType;
@@ -7,6 +8,7 @@ import ast.Type;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 public class CodeGenerator {
     private PrintWriter out;
@@ -296,6 +298,5 @@ public class CodeGenerator {
         out.println("\tjnz\t" + "label" +label);
         out.flush();
     }
-
 
 }

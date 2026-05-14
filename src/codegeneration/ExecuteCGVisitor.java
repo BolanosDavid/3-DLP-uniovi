@@ -1,7 +1,6 @@
 package codegeneration;
 
 import ast.Definition;
-import ast.Expression;
 import ast.Program;
 import ast.definitions.FuncDefinition;
 import ast.definitions.VarDefinition;
@@ -10,7 +9,7 @@ import ast.types.FunctionType;
 import ast.types.IntType;
 import ast.types.VoidType;
 
-public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
+public class ExecuteCGVisitor extends AbstractCGVisitor<FuncDefinition, FuncDefinition> {
     private final ValueCGVisitor valueCGVisitor;
     private final AddressCGVisitor addressCGVisitor;
 
@@ -30,7 +29,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
      *     halt()
      */
     @Override
-    public Void visit(Program p, Void o) {
+    public FuncDefinition visit(Program p, FuncDefinition o) {
         for (Definition d : p.getDefinitions()) {
             if(d instanceof VarDefinition) {
                 d.accept(this, o);
@@ -51,7 +50,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
      * 		< ' * > type ID < ( offset > definition.offset < ) >
      */
     @Override
-    public Void visit(VarDefinition v, Void o) {
+    public FuncDefinition visit(VarDefinition v, FuncDefinition o) {
         getCodeGenerator().comment(v.getType() +" "+ v.getName() + " (offset " + v.getOffset() + ")");
         return null;
     }
@@ -65,12 +64,13 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
      *          comentarios de las variables locales
      *      <enter> def.bytesLocalSum
      *      for( Statemets stmt : statement*){
-     *          execute[[stmt]]
+     *          execute[[stmt]](def)
      *      }
-     *      <ret> 0, definition.byteLocalSum, 0 <- TODO: Esto se quitará luego
+     *      if(type.getReturnType() != FuncDefinitionType.getInstance())
+     *          <ret> 0, definition.byteLocalSum, 0
      */
     @Override
-    public Void visit(FuncDefinition f, Void o) {
+    public FuncDefinition visit(FuncDefinition f, FuncDefinition o) {
         getCodeGenerator().commentLine(f.getLine());
         getCodeGenerator().printFunction(f.getName());
 
@@ -94,16 +94,16 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
 
         f.getStatements().forEach(s -> {
             if (!(s instanceof VarDefinition)) {
-                s.accept(this, o);
+                s.accept(this, f);
             }
         });
 
-        // ret provisional para funciones void
-        if (funcType.getReturnType() instanceof VoidType) {
-            getCodeGenerator().ret(0, f.getByteLocalSum(), funcType.getParameters().stream()
-                    .mapToInt(p -> p.getType().numberOfBytes())
-                    .sum());
+        int paramByteSum = funcType.getParameters().stream().mapToInt(p -> p.getType().numberOfBytes()).sum();
+        if(funcType.getReturnType() == VoidType.getInstance()){
+            getCodeGenerator().ret(0, f.getByteLocalSum(), paramByteSum);
         }
+
+
 
         return null;
     }
@@ -115,7 +115,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
      *      <store> expr1.type.suffix()
      */
     @Override
-    public Void visit(Assignment a, Void o) {
+    public FuncDefinition visit(Assignment a, FuncDefinition o) {
         getCodeGenerator().commentLine(a.getLine());
         getCodeGenerator().comment("Assignment");
         a.getLeft().accept(addressCGVisitor, null);
@@ -140,7 +140,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
      *  <label> end <:>
      */
     @Override
-    public Void visit(IfStatement s, Void p){
+    public FuncDefinition visit(IfStatement s, FuncDefinition p){
         int elseLabel = getCodeGenerator().getLabel();
         int endLabel = getCodeGenerator().getLabel();
         s.getCondition().accept(valueCGVisitor, null);
@@ -168,7 +168,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
      * 	    <label> end <:>
      */
     @Override
-    public Void visit(WhileStatement w, Void p){
+    public FuncDefinition visit(WhileStatement w, FuncDefinition p){
         int condition = getCodeGenerator().getLabel();
         int end = getCodeGenerator().getLabel();
         getCodeGenerator().label(condition);
@@ -189,7 +189,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
      *  }
      */
     @Override
-    public Void visit(LogStatement l, Void o) {
+    public FuncDefinition visit(LogStatement l, FuncDefinition o) {
         l.getExpressions().forEach(e -> {
             getCodeGenerator().commentLine(l.getLine());
             getCodeGenerator().comment("Write");
@@ -207,7 +207,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
      *  }
      */
     @Override
-    public Void visit(InputStatement i, Void o) {
+    public FuncDefinition visit(InputStatement i, FuncDefinition o) {
         getCodeGenerator().commentLine(i.getLine());
         i.getExpressions().forEach(e -> {
             getCodeGenerator().comment("Read");
@@ -215,6 +215,46 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<Void, Void> {
             getCodeGenerator().input(e.getType());
             getCodeGenerator().store(e.getType());
         });
+        return null;
+    }
+    /**
+     * execute[[Invocation: statement -> expression1 expression2*]]():
+     * 	    value[[(Expression) statement]]()
+     * 	    if(expresion1.type.returnType != FuncDefinitionType.getInstance()){
+     * 	        <pop> expression1.type.returnType.suffix()
+     * 	    }
+     */
+    @Override
+    public FuncDefinition visit(Invocation i, FuncDefinition o) {
+        getCodeGenerator().commentLine(i.getLine());
+        i.accept(valueCGVisitor, null);
+        FunctionType funcType =  (FunctionType) i.getFunction().getType();    // Cast seguro
+        if((funcType.getReturnType() != VoidType.getInstance())) {
+            getCodeGenerator().pop(funcType.getReturnType());
+        }
+        return null;
+    }
+
+    /**
+     * execute[[ReturnStatement: statement -> expression]](FunctionDefinition f):
+     *      value[[expression]]()
+     *      cg.convertTo(expression.type, f.getType().returnType)
+     *      <ret> f.type.returnType, f.byteLocalSum, f.type.parameters.stream().mapToInt(p -> p.type.numberOfBytes()).sum()
+     *      
+     */
+    @Override
+    public FuncDefinition visit(ReturnStatement r, FuncDefinition f) {
+        getCodeGenerator().commentLine(r.getLine());
+        getCodeGenerator().comment("Return");
+        r.getExpression().accept(valueCGVisitor, null);
+        FunctionType funcType =(FunctionType) f.getType();
+        getCodeGenerator().convertTo(r.getExpression().getType(),funcType.getReturnType());
+        int returnSum = funcType.getReturnType().numberOfBytes();
+        getCodeGenerator().ret(
+                returnSum, 
+                f.getByteLocalSum(),
+                funcType.getParameters().stream().mapToInt(p -> p.getType().numberOfBytes()).sum());
+        
         return null;
     }
 }
