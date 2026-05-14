@@ -32,7 +32,9 @@ public class CharType extends AbstractType {
 
     @Override
     public Type comparison(Type t, Locatable l) {
-        if(this == t)  return IntType.getInstance();
+        if(this == t || t == IntType.getInstance() || t == NumberType.getInstance() ){
+            return IntType.getInstance();
+        }
         return super.comparison(t, l);
     }
 

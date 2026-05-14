@@ -3,6 +3,7 @@ package codegeneration;
 
 import ast.Expression;
 import ast.Statement;
+import ast.Type;
 import ast.expressions.*;
 import ast.expressions.Arithmetic;
 import ast.expressions.Cast;
@@ -13,6 +14,7 @@ import ast.expressions.UnaryNot;
 import ast.statements.Invocation;
 import ast.types.FunctionType;
 import ast.types.IntType;
+import ast.types.NumberType;
 
 public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
     private AddressCGVisitor addressCGVisitor;
@@ -105,11 +107,19 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
      */
     @Override
     public Void visit(Comparison c, Void o) {
+        // A la hora de promocionar, tenemos que usar el tipo de mayor "rango".
+        Type comparisonType = c.getLeft().getType() == NumberType.getInstance()
+                        || c.getRight().getType() == NumberType.getInstance()
+                        ? NumberType.getInstance()
+                        : IntType.getInstance();
+
         c.getLeft().accept(this, o);
-        getCodeGenerator().convertTo(c.getLeft().getType(), c.getType());
+        getCodeGenerator().convertTo(c.getLeft().getType(), comparisonType);
+
         c.getRight().accept(this, o);
-        getCodeGenerator().convertTo(c.getRight().getType(), c.getType());
-        getCodeGenerator().comparison(c.getOperator(), c.getType());
+        getCodeGenerator().convertTo(c.getRight().getType(), comparisonType);
+
+        getCodeGenerator().comparison(c.getOperator(), comparisonType);
 
         return null;
     }
